@@ -13,7 +13,7 @@ double keliling(double k){
 
 int main()
 {
-    int k,i;
+    int sisi,i;
 
     cout << "Pilih Menu" << endl;
     cout << "1. Hitung Luas Kubus" << endl;
@@ -23,12 +23,12 @@ int main()
 
     if(i == 1){
         cout << "Masukan Anggka : ";
-        cin >> k;
-        cout << "Hasil adalah : " << luas(k);
+        cin >> sisi;
+        cout << "Hasil adalah : " << luas(sisi);
     } else if(i == 2){
         cout << "Masukan Anggka : ";
-        cin >> k;
-        cout << "Hasil adalah : " << keliling(k);
+        cin >> sisi;
+        cout << "Hasil adalah : " << keliling(sisi);
     } else {
         cout << "Data Yang Dimasukin Tidak Di Temukan" << endl;
     }
