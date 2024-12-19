@@ -1,6 +1,26 @@
 START
 
-FUNCTION ()
+FUNCTION tambahBarang()
+    
+END FUNCTION
+
+FUNCTION tampilkanSemuaBarang()
+    
+END FUNCTION
+
+FUNCTION ProsesTransaksi()
+    
+END FUNCTION
+
+FUNCTION TampilkanMetodePembayaran()
+    
+END FUNCTION
+
+FUNCTION BuatLaporanPenjualan()
+    
+END FUNCTION
+
+FUNCTION SimpanTransaksikeFile()
     
 END FUNCTION
 
