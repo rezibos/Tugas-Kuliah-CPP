@@ -1,8 +1,6 @@
 #include <iostream>
 using namespace std;
 
-
-
 void tambahBarang(){
 
 }
@@ -14,7 +12,6 @@ void tampilkanSemuaBarang(){
 void tampilkanSemuaBarang(){
     
 }
-
 
 void tampilkanSemuaBarang(){
     
@@ -40,6 +37,7 @@ void simpanTransaksiKeFile(){
 int main()
 {
     int pilihan;
+
     do{
         cout << "====================================\n";
         cout << "\nAplikasi Kasir Suka Maju Bersama\n";
@@ -78,6 +76,3 @@ int main()
 
     cout << "Anda Keluar Dari Program\n";
 }
-
-
-
