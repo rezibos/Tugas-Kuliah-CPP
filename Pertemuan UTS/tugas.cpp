@@ -19,19 +19,20 @@ void tambahBarang(){
     char pilihan;
 
     do{
-        
+
         cout << "====================================\n";
-        cout << "Masukkan nama barang : ";
+        cout << "Masukkan ID Barang : ";
         cin >> barang.id_barang;
-        cout << "Masukkan nama barang : ";
+        cout << "Masukkan Nama Barang : ";
         cin >> barang.nama_barang;
-        cout << "Masukkan harga barang : ";
+        cout << "Masukkan Harga Barang : ";
         cin >> barang.harga_barang;
-        cout << "Masukkan stok barang : ";
+        cout << "Masukkan Stok Barang : ";
         cin >> barang.stok_barang;
 
+        cout << "\n";
         inventaris.push_back(barang);
-        cout << "Barang berhasil ditambahkan !\n";
+        cout << "Barang Berhasil Ditambahkan !\n";
 
         cout << "====================================\n";
         cout << "Apakah Anda Ingin Menambahkan Barang (y/n) : ";
@@ -69,7 +70,7 @@ int main()
 
     do{
         cout << "====================================\n";
-        cout << "\nAplikasi Kasir Suka Maju Bersama\n";
+        cout << "  Aplikasi Kasir Suka Maju Bersama\n";
         cout << "====================================\n";
         cout << "1. Tambah Barang Baru\n";
         cout << "2. Tampilkan Semua Barang\n";
