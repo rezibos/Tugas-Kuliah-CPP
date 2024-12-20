@@ -70,7 +70,7 @@ int main()
 
     do{
         cout << "====================================\n";
-        cout << "  Aplikasi Kasir Suka Maju Bersama\n";
+        cout << "  Aplikasi Kasir Suka Maju Bersama  \n";
         cout << "====================================\n";
         cout << "1. Tambah Barang Baru\n";
         cout << "2. Tampilkan Semua Barang\n";
@@ -103,5 +103,6 @@ int main()
         }
 
     } while (pilihan != 7);
+
     cout << "Anda Keluar Dari Program\n";
 }

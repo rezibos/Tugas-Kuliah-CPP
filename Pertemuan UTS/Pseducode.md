@@ -1,7 +1,29 @@
 START
 
 FUNCTION tambahBarang()
-    
+
+    DECLARE barang AS Item
+    DECLARE pilihan AS CHAR
+
+    REPEAT
+        DISPLAY "===================================="
+        DISPLAY "Masukkan ID Barang: "
+        INPUT barang.id_barang
+        DISPLAY "Masukkan Nama Barang: "
+        INPUT barang.nama_barang
+        DISPLAY "Masukkan Harga Barang: "
+        INPUT barang.harga_barang
+        DISPLAY "Masukkan Stok Barang: "
+        INPUT barang.stok_barang
+
+        ADD barang TO inventaris
+        DISPLAY "Barang Berhasil Ditambahkan!"
+        DISPLAY "===================================="
+        DISPLAY "Apakah Anda Ingin Menambahkan Barang (y/n): "
+        INPUT pilihan
+        DISPLAY "===================================="
+    UNTIL pilihan != 'y' AND pilihan != 'Y'
+
 END FUNCTION
 
 FUNCTION tampilkanSemuaBarang()
