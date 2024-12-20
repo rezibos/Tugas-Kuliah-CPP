@@ -1,8 +1,45 @@
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <iomanip>
+#include <ctime>
 using namespace std;
 
+struct Item {
+    string id_barang;
+    string nama_barang;
+    double harga_barang;
+    string stok_barang;
+};
+
+vector<Item> inventaris;
+
 void tambahBarang(){
-    cout << "" << endl;
+    Item barang;
+    char pilihan;
+
+    do{
+        
+        cout << "====================================\n";
+        cout << "Masukkan nama barang : ";
+        cin >> barang.id_barang;
+        cout << "Masukkan nama barang : ";
+        cin >> barang.nama_barang;
+        cout << "Masukkan harga barang : ";
+        cin >> barang.harga_barang;
+        cout << "Masukkan stok barang : ";
+        cin >> barang.stok_barang;
+
+        inventaris.push_back(barang);
+        cout << "Barang berhasil ditambahkan !\n";
+
+        cout << "====================================\n";
+        cout << "Apakah Anda Ingin Menambahkan Barang (y/n) : ";
+        cin >> pilihan;
+        cout << "====================================\n";
+
+    } while (pilihan == 'Y' || pilihan == 'y');
+    
 }
 
 void tampilkanSemuaBarang(){
@@ -44,7 +81,6 @@ int main()
         cout << "====================================\n";
         cout << "Masukkan pilihan Anda : ";
         cin >> pilihan;
-        cout << "====================================\n";
 
         switch (pilihan) {
             case 1: tambahBarang(); 

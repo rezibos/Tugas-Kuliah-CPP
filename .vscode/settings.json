@@ -2,6 +2,16 @@
     "files.associations": {
         "iostream": "cpp",
         "ostream": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "format": "cpp",
+        "locale": "cpp",
+        "xlocale": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xlocnum": "cpp",
+        "xloctime": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
+        "vector": "cpp"
     },
 }
