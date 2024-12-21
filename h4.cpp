@@ -116,7 +116,7 @@ void buatLaporan(string jenis) {
         cout << left << setw(15) << transaksi.waktu << setw(10) << transaksi.total << transaksi.metodePembayaran << "\n";
     }
 }
-// SBR AMBIL MKN
+
 void simpanTransaksiKeFile() {
     ofstream file("transaksi.txt");
     if (!file) {
