@@ -139,9 +139,11 @@ void tampilkanSemuaBarang(){
 
 void TampilkanMetodePembayaran(){
     cout << "====================================\n";
-    cout << "Metode pembayaran yang tersedia:\n";
-    cout << "1. Tunai\n2. Kartu Kredit\n3. Dompet Digital\n";
+    cout << "   Metode pembayaran yang tersedia  \n";
     cout << "====================================\n";
+    cout << "1. Tunai\n";
+    cout << "2. Kartu Kredit\n";
+    cout << "3. Dompet Digital\n";
 }
 
 void ProsesTransaksi(){
@@ -211,6 +213,7 @@ int main()
     } while (pilihan != '0');
 
     cout << "====================================\n";
-    cout << "Anda Keluar Dari Program\n";
+    cout << "      Anda Keluar Dari Program      \n";
     cout << "====================================\n";
+
 }
