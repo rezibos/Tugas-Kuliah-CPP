@@ -1,15 +1,19 @@
-1. Run program 
+1. Run program / Mulai
+
 2. Tampilan Awal User
     ========================================
         Aplikasi Kasir Suka Maju Bersama
     ========================================
-        1. Tambah Barang Baru
-        2. Tampilkan Semua Barang
-        3. Proses Transaksi
-        4. Tampilkan Metode Pembayaran
-        5. Buat Laporan Penjualan
-        6. Simpan Transaksi ke File
-        7. Keluar
+        1. Tambah Barang 
+        2. Edit Barang 
+        3. Hapus Barang 
+        4. Tampilkan Semua Barang
+        5. Tampilkan Metode Pembayaran
+        6. Proses Transaksi
+        7. Buat Laporan Penjualan
+        8. Simpan Transaksi ke File
+        9. Tampil Semua Laporan Transaksi
+        0. Keluar
     ========================================
 
 3. User Memasukan Input
@@ -32,8 +36,9 @@
         Masukan Stok Barang :
         INPUT Stok Barang
 
-        Barang Berhasil Ditambahkan !
     ========================================
+
+5. Jika barang berhasil di
 
 5. Jika data berhasil di tambahkan maka muncul
     ========================================
@@ -43,7 +48,7 @@
 
     ========================================
 
-6. Jika y maka data akan muncul seperti nomor 5
+6. Jika y maka data akan muncul seperti nomor 4
 
 7. Jika t maka data akan muncul seperti nomor 2
 

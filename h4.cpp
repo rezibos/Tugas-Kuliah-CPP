@@ -110,10 +110,10 @@ void prosesTransaksi() {
 
 void buatLaporan(string jenis) {
     cout << "Laporan Penjualan - " << jenis << "\n";
-    cout << left << setw(15) << "Waktu" << setw(10) << "Total" << "Metode Pembayaran\n";
+    cout << left << setw(25) << "Waktu" << setw(10) << "Total" << "Metode Pembayaran\n";
     cout << "---------------------------------------------\n";
     for (const auto &transaksi : penjualan) {
-        cout << left << setw(15) << transaksi.waktu << setw(10) << transaksi.total << transaksi.metodePembayaran << "\n";
+        cout << left << setw(25) << transaksi.waktu << setw(10) << transaksi.total << transaksi.metodePembayaran << "\n";
     }
 }
 

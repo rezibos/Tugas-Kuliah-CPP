@@ -12,6 +12,7 @@
         "xloctime": "cpp",
         "fstream": "cpp",
         "iomanip": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "ios": "cpp"
     },
 }

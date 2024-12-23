@@ -1,91 +1,180 @@
 START
 
-FUNCTION tambahBarang()
+DECLARE TYPE Item
+    id_barang AS STRING
+    nama_barang AS STRING
+    harga_barang AS STRING
+    stok_barang AS STRING
+END TYPE
 
-    DECLARE barang AS Item
+DECLARE inventaris AS ARRAY OF Item WITH MAXIMUM SIZE MAX
+DECLARE jumlah_barang AS INTEGER = 0
+
+FUNCTION tambahBarang()
     DECLARE pilihan AS CHAR
 
     REPEAT
+        IF jumlah_barang >= MAX THEN
+            DISPLAY "Data Penuh! Tidak dapat menambahkan barang baru."
+            RETURN
+        END IF
+
+        DISPLAY "===================================="
+        DISPLAY "Tambah Barang"
         DISPLAY "===================================="
         DISPLAY "Masukkan ID Barang: "
-        INPUT barang.id_barang
+        INPUT inventaris[jumlah_barang].id_barang
         DISPLAY "Masukkan Nama Barang: "
-        INPUT barang.nama_barang
+        INPUT inventaris[jumlah_barang].nama_barang
         DISPLAY "Masukkan Harga Barang: "
-        INPUT barang.harga_barang
+        INPUT inventaris[jumlah_barang].harga_barang
         DISPLAY "Masukkan Stok Barang: "
-        INPUT barang.stok_barang
+        INPUT inventaris[jumlah_barang].stok_barang
 
-        ADD barang TO inventaris
+        INCREMENT jumlah_barang
         DISPLAY "Barang Berhasil Ditambahkan!"
         DISPLAY "===================================="
-        DISPLAY "Apakah Anda Ingin Menambahkan Barang (y/n): "
+        DISPLAY "Apakah Anda Ingin Menambahkan Barang Lagi (y/n): "
         INPUT pilihan
-        DISPLAY "===================================="
     UNTIL pilihan != 'y' AND pilihan != 'Y'
+END FUNCTION
 
+FUNCTION editBarang()
+    DECLARE id_barang AS STRING
+    DISPLAY "===================================="
+    DISPLAY "Edit Barang"
+    DISPLAY "===================================="
+    DISPLAY "Masukkan ID Barang yang ingin diubah: "
+    INPUT id_barang
+
+    FOR i FROM 0 TO jumlah_barang - 1 DO
+        IF inventaris[i].id_barang == id_barang THEN
+            DISPLAY "Barang ditemukan:"
+            DISPLAY "Nama Barang: ", inventaris[i].nama_barang
+            DISPLAY "Harga Barang: ", inventaris[i].harga_barang
+            DISPLAY "Stok Barang: ", inventaris[i].stok_barang
+            DISPLAY "Masukkan Nama Barang: "
+            INPUT inventaris[i].nama_barang
+            DISPLAY "Masukkan Harga Barang: "
+            INPUT inventaris[i].harga_barang
+            DISPLAY "Masukkan Stok Barang: "
+            INPUT inventaris[i].stok_barang
+            DISPLAY "Barang berhasil diperbarui!"
+            RETURN
+        END IF
+    END FOR
+    DISPLAY "ID Barang tidak ditemukan."
+END FUNCTION
+
+FUNCTION hapusBarang()
+    DECLARE id_barang AS STRING
+    DISPLAY "===================================="
+    DISPLAY "Hapus Barang"
+    DISPLAY "===================================="
+    DISPLAY "Masukkan ID Barang yang ingin dihapus: "
+    INPUT id_barang
+
+    FOR i FROM 0 TO jumlah_barang - 1 DO
+        IF inventaris[i].id_barang == id_barang THEN
+            DISPLAY "Barang dengan ID ", id_barang, " ditemukan dan akan dihapus."
+            FOR j FROM i TO jumlah_barang - 2 DO
+                SET inventaris[j] = inventaris[j + 1]
+            END FOR
+            DECREMENT jumlah_barang
+            DISPLAY "Barang berhasil dihapus!"
+            RETURN
+        END IF
+    END FOR
+    DISPLAY "ID Barang tidak ditemukan."
 END FUNCTION
 
 FUNCTION tampilkanSemuaBarang()
-    
-END FUNCTION
+    IF jumlah_barang == 0 THEN
+        DISPLAY "Tidak Ada Barang"
+        RETURN
+    END IF
 
-FUNCTION ProsesTransaksi()
-    
+    DISPLAY "=========================================================================="
+    DISPLAY "| ID Barang     | Nama Barang         | Harga Barang    | Stok Barang   |"
+    DISPLAY "=========================================================================="
+    FOR i FROM 0 TO jumlah_barang - 1 DO
+        DISPLAY "| ", inventaris[i].id_barang, " | ", inventaris[i].nama_barang, " | ", inventaris[i].harga_barang, " | ", inventaris[i].stok_barang, " |"
+        DISPLAY "=========================================================================="
+    END FOR
 END FUNCTION
 
 FUNCTION TampilkanMetodePembayaran()
-    
+    DISPLAY "===================================="
+    DISPLAY "Metode Pembayaran yang Tersedia"
+    DISPLAY "===================================="
+    DISPLAY "1. Tunai"
+    DISPLAY "2. Kartu Kredit"
+    DISPLAY "3. Dompet Digital"
+END FUNCTION
+
+FUNCTION ProsesTransaksi()
+    DISPLAY "Fungsi belum diimplementasi."
 END FUNCTION
 
 FUNCTION BuatLaporanPenjualan()
-    
+    DISPLAY "Fungsi belum diimplementasi."
 END FUNCTION
 
 FUNCTION SimpanTransaksikeFile()
-    
+    DISPLAY "Fungsi belum diimplementasi."
+END FUNCTION
+
+FUNCTION laporanTransaksi()
+    DISPLAY "Fungsi belum diimplementasi."
 END FUNCTION
 
 MAIN
-    DECLARE pilihan AS INTEGER
+    DECLARE pilihan AS CHAR
 
     REPEAT
         DISPLAY "===================================="
         DISPLAY "Aplikasi Kasir Suka Maju Bersama"
         DISPLAY "===================================="
-        DISPLAY "1. Tambah Barang Baru"
-        DISPLAY "2. Tampilkan Semua Barang"
-        DISPLAY "3. Proses Transaksi"
-        DISPLAY "4. Tampilkan Metode Pembayaran"
-        DISPLAY "5. Buat Laporan Penjualan"
-        DISPLAY "6. Simpan Transaksi ke File"
-        DISPLAY "7. Keluar"
+        DISPLAY "1. Tambah Barang"
+        DISPLAY "2. Edit Barang"
+        DISPLAY "3. Hapus Barang"
+        DISPLAY "4. Tampilkan Semua Barang"
+        DISPLAY "5. Tampilkan Metode Pembayaran"
+        DISPLAY "6. Proses Transaksi"
+        DISPLAY "7. Buat Laporan Penjualan"
+        DISPLAY "8. Simpan Transaksi ke File"
+        DISPLAY "9. Tampil Semua Laporan Transaksi"
+        DISPLAY "0. Keluar"
         DISPLAY "===================================="
         DISPLAY "Masukkan pilihan Anda: "
         INPUT pilihan
-        DISPLAY "===================================="
 
         SWITCH pilihan
-            CASE 1:
+            CASE '1':
                 CALL tambahBarang()
-            CASE 2:
+            CASE '2':
+                CALL editBarang()
+            CASE '3':
+                CALL hapusBarang()
+            CASE '4':
                 CALL tampilkanSemuaBarang()
-            CASE 3:
-                CALL ProsesTransaksi()
-            CASE 4:
+            CASE '5':
                 CALL TampilkanMetodePembayaran()
-            CASE 5:
+            CASE '6':
+                CALL ProsesTransaksi()
+            CASE '7':
                 CALL BuatLaporanPenjualan()
-            CASE 6:
+            CASE '8':
                 CALL SimpanTransaksikeFile()
-            CASE 7:
-                EXIT PROGRAM
+            CASE '9':
+                CALL laporanTransaksi()
+            CASE '0':
+                DISPLAY "Anda Keluar Dari Program"
+                BREAK
             DEFAULT:
                 DISPLAY "Pilihan tidak valid. Coba lagi."
         END SWITCH
-    UNTIL pilihan = 7
-
-    DISPLAY "Anda Keluar Dari Program"
+    UNTIL pilihan == '0'
 END MAIN
 
 END
