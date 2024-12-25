@@ -78,7 +78,7 @@ int main()
     cin >> stock_barang;
 
     Barang dataBarang = Barang(id_barang, nama_barang, harga_barang, stock_barang);
-    DBase dataBase = DBase("data.xls");
+    DBase dataBase = DBase("data.txt");
 
     dataBase.save(dataBarang);
     
