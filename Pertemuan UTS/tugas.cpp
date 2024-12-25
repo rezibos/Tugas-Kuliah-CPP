@@ -23,6 +23,7 @@ struct Transaksi {
 
 Item inventaris[MAX];
 Transaksi penjualan[MAX];
+
 int jumlah_barang = 0;
 int jumlah_transaksi = 0;
 
@@ -34,19 +35,19 @@ void tambahBarang() {
             cout << "Data Penuh! Tidak dapat menambahkan barang baru.\n";
             return;
         } else {
-                cout << "====================================\n";
-                cout << "            Tambah Barang           \n";
-                cout << "====================================\n";
+            cout << "====================================\n";
+            cout << "            Tambah Barang           \n";
+            cout << "====================================\n";
 
-                cout << "Masukkan ID Barang : ";
-                cin >> inventaris[jumlah_barang].id_barang;
-                cout << "Masukkan Nama Barang : ";
-                cin >> inventaris[jumlah_barang].nama_barang;
-                cout << "Masukkan Harga Barang : ";
-                cin >> inventaris[jumlah_barang].harga_barang;
-                cout << "Masukkan Stok Barang : ";
-                cin >> inventaris[jumlah_barang].stok_barang;
-                jumlah_barang++;
+            cout << "Masukkan ID Barang : ";
+            cin >> inventaris[jumlah_barang].id_barang;
+            cout << "Masukkan Nama Barang : ";
+            cin >> inventaris[jumlah_barang].nama_barang;
+            cout << "Masukkan Harga Barang : ";
+            cin >> inventaris[jumlah_barang].harga_barang;
+            cout << "Masukkan Stok Barang : ";
+            cin >> inventaris[jumlah_barang].stok_barang;
+            jumlah_barang++;
 
                 cout << "\nBarang Berhasil Ditambahkan!\n";
         }
@@ -54,9 +55,9 @@ void tambahBarang() {
         cout << "====================================\n";
         cout << "Apakah Anda Ingin Menambahkan Barang Lagi (y/n) : ";
         cin >> pilihan;
-
+        
     } while (pilihan == 'Y' || pilihan == 'y');
-
+    
 }
 
 void editBarang() {
@@ -127,6 +128,7 @@ void tampilkanSemuaBarang(){
     if (jumlah_barang == 0) {
         cout << "====================================\n";
         cout << "         Tidak Ada Barang           \n";
+        cout << "====================================\n";
         return;
     } else {
         cout << "==========================================================================\n";
@@ -168,6 +170,9 @@ void ProsesTransaksi(){
     int jumlah;
     int pilihan;
     Transaksi transaksi;
+
+    double total_barang;
+    int total_jumlah_barang = 0;
     double total = 0;
 
     string barang_belian[MAX];
@@ -176,17 +181,19 @@ void ProsesTransaksi(){
     if (jumlah_barang == 0) {
         cout << "====================================\n";
         cout << "         Tidak Ada Barang           \n";
+        cout << "====================================\n";
         return;
     } else {
         cout << "====================================\n";
-        cout << "            Proses Transaksi        \n";
+        cout << "           Proses Transaksi         \n";
         cout << "====================================\n";
 
         while (true) {
-            cout << "Masukkan nama barang (atau 'selesai / keluar / 0' untuk mengakhiri): ";
+            
+            cout << "Masukkan nama barang (atau 'sudah' untuk mengakhiri): ";
             cin >> namaBarang;
-
-            if (namaBarang == "selesai" || namaBarang == "keluar" || namaBarang == "0"){
+            
+            if (namaBarang == "sudah"){
                 break;
             }
 
@@ -208,8 +215,6 @@ void ProsesTransaksi(){
                         barangTerjual.stok_barang = jumlah; 
                         transaksi.barang[transaksi.jumlah_barang++] = barangTerjual;
                         total += barangTerjual.harga_barang * jumlah;
-                        barang_belian[transaksi.jumlah_barang - 1] = inventaris[i].nama_barang;
-                        jumlah_belian[transaksi.jumlah_barang - 1] = jumlah;
                     }
                     break;
                 }
@@ -220,8 +225,9 @@ void ProsesTransaksi(){
             }
 
         }
-
+        
         TampilkanMetodePembayaran();
+        cout << "4. Keluar\n";
         cout << "Pilih metode pembayaran : ";
         cin >> pilihan;
 
@@ -232,6 +238,7 @@ void ProsesTransaksi(){
                     break;
             case 3: transaksi.metodePembayaran = "Dompet Digital"; 
                     break;
+            case 4: return;
             default: transaksi.metodePembayaran = "Pilihan Tidak Ditemukan";
                     break;
         }
@@ -247,27 +254,62 @@ void ProsesTransaksi(){
 
         cout << "\nTransaksi selesai!\n";
 
-        cout << "====================================\n";
-        cout << "      Hasil Dari Belanjaan Anda     \n";
-        cout << "====================================\n";
-        cout << "| " << setw(15) << left << "Nama Barang" << " | " << setw(14) << left << "Jumlah Barang" << " |\n";
-        cout << "====================================\n";
+        cout << "================================================================\n";
+        cout << "                    Hasil Dari Belanjaan Anda                   \n";
+        cout << "================================================================\n";
+        cout << "| " << setw(18) << left << "Nama Barang" 
+            << " | " << setw(18) << left << "Jumlah Barang" 
+            << " | " << setw(18) << left << "Harga Barang Satuan" 
+            << " | " << setw(18) << left << "Subtotal Barang" << " |\n";
+        cout << "================================================================\n";
 
-        for(int i = 0; i < jumlah_barang; i++){
-            cout << "| " << setw(15) << left << barang_belian[i] << " | " << setw(14) << left << jumlah_belian[i] << " |\n";
-            cout << "====================================\n";
+        for (int i = 0; i < transaksi.jumlah_barang; i++) {
+        total_barang = transaksi.barang[i].harga_barang * transaksi.barang[i].stok_barang;
+        total_jumlah_barang += transaksi.barang[i].stok_barang;
+        cout << "| " << setw(18) << left << transaksi.barang[i].nama_barang 
+                << " | " << setw(18) << left << transaksi.barang[i].stok_barang
+                << " | " << setw(18) << left << transaksi.barang[i].harga_barang 
+                << " | " << setw(18) << left << total_barang <<  " |\n";
         }
-        cout << "Total Keseluruhan Barang Yang Di Beli : " << total << "\n";
+        cout << "================================================================\n\n";
+
         cout << "Metode Pembayaran : " << transaksi.metodePembayaran << "\n";
-        
+        cout << "Total Keseluruhan Item Yang Dibeli : " << transaksi.jumlah_barang << "\n";
+        cout << "Total Keseluruhan Jumlah Barang Yang Dibeli : " << total_jumlah_barang << "\n";
+        cout << "Total Keseluruhan Harga Barang Yang Di Beli : " << total << "\n";
     }
 }
 
 
 void BuatLaporanPenjualan(){
-    cout << "" << endl;
-}
+    if (jumlah_transaksi == 0) {
+        cout << "====================================\n";
+        cout << "         Tidak Ada Transaksi        \n";
+        cout << "====================================\n";
+        return;
+    } else {
+        cout << "==========================================================================\n";
+        cout << "| " << setw(5) << left << "No" << " | "
+                << setw(20) << left << "Nama Barang" << " | "
+                << setw(10) << left << "Jumlah" << " | "
+                << setw(15) << left << "Total Harga" << " | "
+                << setw(18) << left << "Metode Pembayaran" << " | "
+                << setw(20) << left << "Waktu Transaksi" << " |\n";
+        cout << "==========================================================================\n";
 
+        for (int i = 0; i < jumlah_transaksi; i++) {
+            for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
+                cout << "| " << setw(5) << left << i + 1 << " | "
+                        << setw(20) << left << penjualan[i].barang[j].nama_barang << " | "
+                        << setw(10) << left << penjualan[i].barang[j].stok_barang << " | "
+                        << setw(15) << left << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << " | "
+                        << setw(18) << left << penjualan[i].metodePembayaran << " | "
+                        << setw(20) << left << penjualan[i].waktu << " |\n";
+            }
+            cout << "==========================================================================\n";
+        }
+    }
+}
 
 void SimpanTransaksikeFile(){
     cout << "" << endl;
@@ -323,11 +365,10 @@ int main()
             default: cout << "Pilihan tidak valid. Coba lagi.\n";
                     break;
         }
-    
     } while (pilihan != '0');
 
+    system("cls");
     cout << "====================================\n";
     cout << "      Anda Keluar Dari Program      \n";
     cout << "====================================\n";
-
 }

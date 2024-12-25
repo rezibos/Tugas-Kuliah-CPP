@@ -13,6 +13,7 @@
         "fstream": "cpp",
         "iomanip": "cpp",
         "vector": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "xutility": "cpp"
     },
 }
