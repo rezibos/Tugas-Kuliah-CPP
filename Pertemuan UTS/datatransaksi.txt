@@ -1,0 +1,2 @@
+| Nama Barang          | Jumlah     | Total Harga     | Metode Pembayaran  | Waktu Transaksi      |
+| 1                    | 1          | 1               | Tunai              | 25-12-2024           |

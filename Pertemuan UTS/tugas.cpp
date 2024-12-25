@@ -191,7 +191,7 @@ void ProsesTransaksi(){
         bool transaksiPenuh = false;
         while (transaksiPenuh == false) {
             
-            cout << "Masukkan nama barang (atau 'sudah' untuk mengakhiri): ";
+            cout << "Masukkan nama barang (atau 'sudah' untuk mengakhiri) : ";
             cin >> namaBarang;
             
             if (namaBarang == "sudah"){
@@ -334,13 +334,19 @@ void SimpanTransaksikeFile(){
             return;
         }
 
+        file << "| " << setw(20) << left << "Nama Barang" << " | "
+            << setw(10) << left << "Jumlah" << " | "
+            << setw(15) << left << "Total Harga" << " | "
+            << setw(18) << left << "Metode Pembayaran" << " | "
+            << setw(20) << left << "Waktu Transaksi" << " |\n";
+
         for (int i = 0; i < jumlah_transaksi; i++) {
             for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
-                file << penjualan[i].barang[j].nama_barang << ","
-                    << penjualan[i].barang[j].stok_barang << ","
-                    << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << ","
-                    << penjualan[i].metodePembayaran << ","
-                    << penjualan[i].waktu << "\n";
+                file << "| " << setw(20) << left << penjualan[i].barang[j].nama_barang << " | "
+                    << setw(10) << left << penjualan[i].barang[j].stok_barang << " | "
+                    << setw(15) << left << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << " | "
+                    << setw(18) << left << penjualan[i].metodePembayaran << " | "
+                    << setw(20) << left << penjualan[i].waktu << " |\n";
             }
         }
 
