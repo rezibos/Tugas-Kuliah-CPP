@@ -415,69 +415,46 @@ void parseTanggal(const string& tanggal, int& hari, int& bulan, int& tahun) {
 
 void laporanTransaksi(){
     system("cls");
+    ifstream file("datatransaksi.txt");
 
-    // Jika tidak ada transaksi
-    if (jumlah_transaksi == 0) {
+    if (!file) {
         cout << "====================================\n";
         cout << "         Tidak Ada Transaksi        \n";
         cout << "====================================\n";
-        cout << "Tidak ada transaksi untuk ditampilkan.\n";
+        cout << "Tidak ada transaksi yang dapat ditampilkan.\n";
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
         return;
     }
 
-    int pilihan;
-    cout << "====================================\n";
-    cout << "       Laporan Transaksi           \n";
-    cout << "====================================\n";
-    cout << "1. Laporan Harian\n";
-    cout << "2. Laporan Bulanan\n";
-    cout << "3. Laporan Tahunan\n";
-    cout << "====================================\n";
-    cout << "Pilih menu (1-3): ";
-    cin >> pilihan;
+    string line;
+    int no = 1;
 
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    int hariSekarang = ltm->tm_mday;
-    int bulanSekarang = ltm->tm_mon + 1;
-    int tahunSekarang = ltm->tm_year + 1900;
+    cout << "===========================================================================================================\n";
+    cout << "| " << setw(5) << left << "No" << " | "
+        << setw(15) << left << "Jumlah Barang" << " | "
+        << setw(15) << left << "Total Harga" << " | "
+        << setw(18) << left << "Metode Pembayaran" << " | "
+        << setw(20) << left << "Waktu Transaksi" << " |\n";
+    cout << "===========================================================================================================\n";
 
-    cout << "\n====================================\n";
-    cout << "         Data Transaksi            \n";
-    cout << "====================================\n";
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string stok_barang, harga_total, metode_pembayaran, waktu_transaksi;
 
-    for (int i = 0; i < jumlah_transaksi; i++) {
-        int hariTransaksi, bulanTransaksi, tahunTransaksi;
-        parseTanggal(penjualan[i].waktu, hariTransaksi, bulanTransaksi, tahunTransaksi);
+        getline(ss, stok_barang, ',');
+        getline(ss, harga_total, ',');
+        getline(ss, metode_pembayaran, ',');
+        getline(ss, waktu_transaksi, ',');
 
-        bool tampilkan = false;
-
-        if (pilihan == 1 && hariTransaksi == hariSekarang && bulanTransaksi == bulanSekarang && tahunTransaksi == tahunSekarang) {
-            tampilkan = true;
-        } else if (pilihan == 2 && bulanTransaksi == bulanSekarang && tahunTransaksi == tahunSekarang) {
-            tampilkan = true;
-        } else if (pilihan == 3 && tahunTransaksi == tahunSekarang) {
-            tampilkan = true;
-        }
-
-        if (tampilkan) {
-            cout << "Metode Pembayaran: " << penjualan[i].metodePembayaran << endl;
-            cout << "Waktu Transaksi: " << penjualan[i].waktu << endl;
-            cout << "Detail Barang:\n";
-
-            for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
-                cout << "Nama Barang: " << penjualan[i].barang[j].nama_barang << endl;
-                cout << "Harga: " << penjualan[i].barang[j].harga_barang << endl;
-                cout << "Jumlah: " << penjualan[i].barang[j].stok_barang << endl;
-            }
-            
-            cout << "Total Transaksi: " << penjualan[i].total << endl;
-            cout << "------------------------------------\n";
-        }
+        cout << "| " << setw(5) << left << no++ << " | "
+            << setw(15) << left << stok_barang << " | "
+            << setw(15) << left << harga_total << " | "
+            << setw(18) << left << metode_pembayaran << " | "
+            << setw(20) << left << waktu_transaksi << " |\n";
     }
 
+    cout << "===========================================================================================================\n";
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
 }
