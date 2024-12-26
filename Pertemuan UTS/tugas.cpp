@@ -294,6 +294,8 @@ void ProsesTransaksi(){
 
             cout << "=============================================================================================\n";
             cout << "                                    Hasil Dari Belanjaan Anda                                \n";
+            cout << "=============================================================================================\n\n";
+
             cout << "=============================================================================================\n";
             cout << "| " << setw(20) << left << "Nama Barang" 
                 << " | " << setw(20) << left << "Jumlah Barang" 
@@ -384,10 +386,10 @@ void SimpanTransaksikeFile(){
         } else {
             for (int i = 0; i < jumlah_transaksi; i++) {
                 for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
-                    file << penjualan[i].barang[j].stok_barang << ","
-                        << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << ","
-                        << penjualan[i].metodePembayaran << ","
-                        << penjualan[i].waktu << "\n";
+                    file << "| " << setw(15) << left << penjualan[i].barang[j].stok_barang << " | "
+                        << setw(15) << left  << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << " | "
+                        << setw(18) << left  << penjualan[i].metodePembayaran << " | "
+                        << setw(20) << left  << penjualan[i].waktu << " |\n";
                 }
             }
         }
@@ -399,21 +401,7 @@ void SimpanTransaksikeFile(){
     }
 }
 
-void parseTanggal(const string& tanggal, int& hari, int& bulan, int& tahun) {
-    stringstream ss(tanggal);
-    string temp;
-    
-    getline(ss, temp, '-');
-    hari = stoi(temp);
-    
-    getline(ss, temp, '-');
-    bulan = stoi(temp);
-    
-    getline(ss, temp);
-    tahun = stoi(temp);
-}
-
-void laporanTransaksi(){
+void laporanTransaksi() {
     system("cls");
     ifstream file("datatransaksi.txt");
 
@@ -427,36 +415,107 @@ void laporanTransaksi(){
         return;
     }
 
-    string line;
-    int no = 1;
+    int pilihan, filter_day, filter_month, filter_year;
+    cout << "=================================================================================\n";
+    cout << "                           Filter Laporan Transaksi                              \n";
+    cout << "=================================================================================\n";
+    cout << "1. Laporan Harian\n";
+    cout << "2. Laporan Bulanan\n";
+    cout << "3. Laporan Tahunan\n";
+    cout << "Pilih filter (1-3): ";
+    cin >> pilihan;
+    
+    switch(pilihan) {
+        case 1:
+            cout << "Masukkan tanggal (DD): ";
+            cin >> filter_day;
+            cout << "Masukkan bulan (MM): ";
+            cin >> filter_month;
+            cout << "Masukkan tahun (YYYY): ";
+            cin >> filter_year;
+            break;
+        case 2:
+            filter_day = 0;
+            cout << "Masukkan bulan (MM): ";
+            cin >> filter_month;
+            cout << "Masukkan tahun (YYYY): ";
+            cin >> filter_year;
+            break;
+        case 3:
+            filter_day = 0;
+            filter_month = 0;
+            cout << "Masukkan tahun (YYYY): ";
+            cin >> filter_year;
+            break;
+    }
+    
+    cout << "\n=================================================================================\n";
+    cout << "                 Hasil Transaksi Yang Di Data Transaksi Txt                      \n";
+    cout << "=================================================================================\n\n";
 
-    cout << "===========================================================================================================\n";
-    cout << "| " << setw(5) << left << "No" << " | "
-        << setw(15) << left << "Jumlah Barang" << " | "
+    cout << "=================================================================================\n";
+    cout << "| " << setw(15) << left << "Jumlah Barang" << " | "
         << setw(15) << left << "Total Harga" << " | "
         << setw(18) << left << "Metode Pembayaran" << " | "
         << setw(20) << left << "Waktu Transaksi" << " |\n";
-    cout << "===========================================================================================================\n";
+    cout << "=================================================================================\n";
+
+    string line;
+    int count = 0;
+    char dummy;
 
     while (getline(file, line)) {
         stringstream ss(line);
-        string stok_barang, harga_total, metode_pembayaran, waktu_transaksi;
+        string jumlah_barang, total_harga, metode, tanggal;
+        
+        ss >> dummy;
+        ss >> jumlah_barang;
+        ss >> dummy;
+        ss >> total_harga;
+        ss >> dummy;
+        ss >> metode;
+        ss >> dummy;
+        ss >> tanggal;
 
-        getline(ss, stok_barang, ',');
-        getline(ss, harga_total, ',');
-        getline(ss, metode_pembayaran, ',');
-        getline(ss, waktu_transaksi, ',');
+        int day, month, year;
+        sscanf(tanggal.c_str(), "%d-%d-%d", &day, &month, &year);
 
-        cout << "| " << setw(5) << left << no++ << " | "
-            << setw(15) << left << stok_barang << " | "
-            << setw(15) << left << harga_total << " | "
-            << setw(18) << left << metode_pembayaran << " | "
-            << setw(20) << left << waktu_transaksi << " |\n";
+        bool show_record = false;
+        switch (pilihan) {
+            case 1:
+                if (day == filter_day && month == filter_month && year == filter_year) {
+                    show_record = true;
+                }
+                break;
+            case 2:
+                if (month == filter_month && year == filter_year) {
+                    show_record = true;
+                }
+                break;
+            case 3:
+                if (year == filter_year) {
+                    show_record = true;
+                }
+                break;
+        }
+
+        if (show_record) {
+            cout << "| " << setw(15) << left << jumlah_barang << " | "
+                << setw(15) << left << total_harga << " | "
+                << setw(18) << left << metode << " | "
+                << setw(20) << left << tanggal << " |\n";
+            count++;
+        }
     }
 
-    cout << "===========================================================================================================\n";
+    if (count == 0) {
+        cout << "Tidak ada transaksi untuk periode yang dipilih.\n";
+    }
+
+    cout << "=================================================================================\n";
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
+    file.close();
 }
 
 int main()
