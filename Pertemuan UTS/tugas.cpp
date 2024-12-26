@@ -2,9 +2,10 @@
 #include <fstream>
 #include <iomanip>
 #include <ctime>
+#include <sstream>
 using namespace std;
 
-const int MAX = 2;
+const int MAX = 100;
 
 struct Item {
     string id_barang;
@@ -28,6 +29,7 @@ int jumlah_barang = 0;
 int jumlah_transaksi = 0;
 
 void tambahBarang() {
+    system("cls");
     char pilihan;
 
     do {
@@ -61,6 +63,7 @@ void tambahBarang() {
 }
 
 void editBarang() {
+    system("cls");
     string id_barang;
 
     cout << "====================================\n";
@@ -88,15 +91,21 @@ void editBarang() {
             cout << "====================================\n";
 
             cout << "\nBarang berhasil diperbarui!\n";
+
+            cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+            system("pause > null");
             return;
         }
     }
     
     cout << "ID Barang tidak ditemukan.\n";
-    
+
+    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+    system("pause > null");
 }
 
 void hapusBarang(){
+    system("cls");
     string id_barang;
 
     cout << "====================================\n";
@@ -116,19 +125,28 @@ void hapusBarang(){
 
             jumlah_barang--;
             cout << "Barang berhasil dihapus!\n";
+
+            cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+            system("pause > null");
             return;
         }
     }
 
     cout << "ID Barang tidak ditemukan.\n";
 
+    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+    system("pause > null");
 }
 
 void tampilkanSemuaBarang(){
+    system("cls");
     if (jumlah_barang == 0) {
         cout << "====================================\n";
         cout << "         Tidak Ada Barang           \n";
         cout << "====================================\n";
+
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
         return;
     } else {
         cout << "==========================================================================\n";
@@ -145,16 +163,32 @@ void tampilkanSemuaBarang(){
                     << setw(14) << left << inventaris[i].stok_barang << " |\n";
             cout << "==========================================================================\n";
         }
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
     }
 }
 
 void TampilkanMetodePembayaran(){
+    system("cls");
     cout << "====================================\n";
     cout << "   Metode pembayaran yang tersedia  \n";
     cout << "====================================\n";
     cout << "1. Tunai\n";
     cout << "2. Kartu Kredit\n";
     cout << "3. Dompet Digital\n";
+    cout << "====================================\n";
+    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+    system("pause > null");
+}
+
+void TampilkanMetodePembayaranProses(){
+    cout << "====================================\n";
+    cout << "   Metode pembayaran yang tersedia  \n";
+    cout << "====================================\n";
+    cout << "1. Tunai\n";
+    cout << "2. Kartu Kredit\n";
+    cout << "3. Dompet Digital\n";
+    cout << "====================================\n";
 }
 
 string dapatkanWaktuSekarang() {
@@ -166,6 +200,7 @@ string dapatkanWaktuSekarang() {
 }
 
 void ProsesTransaksi(){
+    system("cls");
     string namaBarang;
     int jumlah;
     int pilihan;
@@ -182,6 +217,9 @@ void ProsesTransaksi(){
         cout << "====================================\n";
         cout << "         Tidak Ada Barang           \n";
         cout << "====================================\n";
+
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
         return;
     } else {
         cout << "====================================\n";
@@ -191,49 +229,46 @@ void ProsesTransaksi(){
         bool transaksiPenuh = false;
         while (transaksiPenuh == false) {
             
-            cout << "Masukkan nama barang (atau 'sudah' untuk mengakhiri) : ";
+            cout << "Masukkan Nama Barang (Atau 'sudah' Untuk Mengakhiri) : ";
             cin >> namaBarang;
             
             if (namaBarang == "sudah"){
                 break;
-            }
+            } else {
+                bool ada_tidak = false;
+                for (int i = 0; i < jumlah_barang; i++) {
+                    if (inventaris[i].nama_barang == namaBarang) {                        
+                        ada_tidak = true;
+                        cout << "Masukkan Jumlah Barang : ";
+                        cin >> jumlah;
 
-            bool ada_tidak = false;
-            for (int i = 0; i < jumlah_barang; i++) {
-                if (inventaris[i].nama_barang == namaBarang) {
-                    
-                    ada_tidak = true;
+                        if (jumlah > inventaris[i].stok_barang) {
+                            cout << "Stok Tidak Mencukupi \n";
+                        } else {
+                            inventaris[i].stok_barang = inventaris[i].stok_barang - jumlah;
+                            Item barangTerjual = inventaris[i];
+                            barangTerjual.stok_barang = jumlah; 
+                            transaksi.barang[transaksi.jumlah_barang++] = barangTerjual;
+                            total += barangTerjual.harga_barang * jumlah;
 
-                    cout << "Masukkan jumlah : ";
-                    cin >> jumlah;
-
-                    if (jumlah > inventaris[i].stok_barang) {
-                        cout << "Stok tidak mencukupi \n";
-                    } else {
-                        inventaris[i].stok_barang = inventaris[i].stok_barang - jumlah;
-                        Item barangTerjual = inventaris[i];
-                        barangTerjual.stok_barang = jumlah; 
-                        transaksi.barang[transaksi.jumlah_barang++] = barangTerjual;
-                        total += barangTerjual.harga_barang * jumlah;
-
-                        if (transaksi.jumlah_barang >= MAX) {
-                            cout << "Tidak Dapat Menambahkan Lebih Banyak Barang\n";
-                            transaksiPenuh = true;
-                            break;
+                            if (transaksi.jumlah_barang >= MAX) {
+                                cout << "Tidak Dapat Menambahkan Lebih Banyak Barang\n";
+                                transaksiPenuh = true;
+                                break;
+                            }
                         }
+                        break;
                     }
-                    break;
+                    
+                    if (ada_tidak == false) {
+                        cout << "Nama Barang tidak ditemukan \n";
+                    }
                 }
-            }
-
-            if (ada_tidak == false) {
-                cout << "Barang tidak ditemukan \n";
+                
             }
         }
         
-        TampilkanMetodePembayaran();
-        cout << "4. Keluar\n";
-        cout << "====================================\n";
+        TampilkanMetodePembayaranProses();
         cout << "Pilih metode pembayaran : ";
         cin >> pilihan;
         cout << "====================================\n";
@@ -245,7 +280,6 @@ void ProsesTransaksi(){
                     break;
             case 3: transaksi.metodePembayaran = "Dompet Digital"; 
                     break;
-            case 4: return;
             default: transaksi.metodePembayaran = "Pilihan Tidak Ditemukan";
                     break;
         }
@@ -253,7 +287,6 @@ void ProsesTransaksi(){
         transaksi.total = total;
         transaksi.waktu = dapatkanWaktuSekarang();
 
-        cout << "Jumlah transaksi sebelum : " << jumlah_transaksi << "\n";
         if (jumlah_transaksi < MAX) {
             penjualan[jumlah_transaksi++] = transaksi;
 
@@ -283,17 +316,24 @@ void ProsesTransaksi(){
             cout << "Total Keseluruhan Jumlah Barang Yang Dibeli : " << total_jumlah_barang << "\n";
             cout << "Total Keseluruhan Harga Barang Yang Di Beli : " << total << "\n";
         } else {
-            cout << "Maaf, jumlah transaksi telah penuh \n";
+            cout << "Maaf, Jumlah Transaksi Telah Penuh \n";
         }
+        
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
     }
 }
 
 
 void BuatLaporanPenjualan(){
+    system("cls");
     if (jumlah_transaksi == 0) {
         cout << "====================================\n";
         cout << "         Tidak Ada Transaksi        \n";
         cout << "====================================\n";
+
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
         return;
     } else {
         cout << "===========================================================================================================\n";
@@ -316,47 +356,130 @@ void BuatLaporanPenjualan(){
             }
             cout << "===========================================================================================================\n";
         }
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
     }
 }
 
 void SimpanTransaksikeFile(){
+    system("cls");
     if (jumlah_transaksi == 0) {
         cout << "====================================\n";
         cout << "         Tidak Ada Transaksi        \n";
         cout << "====================================\n";
         cout << "Tidak ada transaksi untuk disimpan.\n";
+
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
         return;
     } else {
         ofstream file("datatransaksi.txt", ios::app);
 
         if (!file) {
             cout << "Gagal Membuka File Untuk Menyimpan Transaksi.\n";
-            return;
-        }
 
-        file << "| " << setw(20) << left << "Nama Barang" << " | "
-            << setw(10) << left << "Jumlah" << " | "
-            << setw(15) << left << "Total Harga" << " | "
-            << setw(18) << left << "Metode Pembayaran" << " | "
-            << setw(20) << left << "Waktu Transaksi" << " |\n";
-
-        for (int i = 0; i < jumlah_transaksi; i++) {
-            for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
-                file << "| " << setw(20) << left << penjualan[i].barang[j].nama_barang << " | "
-                    << setw(10) << left << penjualan[i].barang[j].stok_barang << " | "
-                    << setw(15) << left << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << " | "
-                    << setw(18) << left << penjualan[i].metodePembayaran << " | "
-                    << setw(20) << left << penjualan[i].waktu << " |\n";
+            cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+            system("pause > null");
+            return; 
+        } else {
+            for (int i = 0; i < jumlah_transaksi; i++) {
+                for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
+                    file << penjualan[i].barang[j].stok_barang << ","
+                        << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << ","
+                        << penjualan[i].metodePembayaran << ","
+                        << penjualan[i].waktu << "\n";
+                }
             }
         }
 
         file.close();
         cout << "\nTransaksi Berhasil Disimpan\n";
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
     }
 }
 
-void laporanTransaksi(){
+void parseTanggal(const string& tanggal, int& hari, int& bulan, int& tahun) {
+    stringstream ss(tanggal);
+    string temp;
     
+    getline(ss, temp, '-');
+    hari = stoi(temp);
+    
+    getline(ss, temp, '-');
+    bulan = stoi(temp);
+    
+    getline(ss, temp);
+    tahun = stoi(temp);
+}
+
+void laporanTransaksi(){
+    system("cls");
+
+    // Jika tidak ada transaksi
+    if (jumlah_transaksi == 0) {
+        cout << "====================================\n";
+        cout << "         Tidak Ada Transaksi        \n";
+        cout << "====================================\n";
+        cout << "Tidak ada transaksi untuk ditampilkan.\n";
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
+        return;
+    }
+
+    int pilihan;
+    cout << "====================================\n";
+    cout << "       Laporan Transaksi           \n";
+    cout << "====================================\n";
+    cout << "1. Laporan Harian\n";
+    cout << "2. Laporan Bulanan\n";
+    cout << "3. Laporan Tahunan\n";
+    cout << "====================================\n";
+    cout << "Pilih menu (1-3): ";
+    cin >> pilihan;
+
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    int hariSekarang = ltm->tm_mday;
+    int bulanSekarang = ltm->tm_mon + 1;
+    int tahunSekarang = ltm->tm_year + 1900;
+
+    cout << "\n====================================\n";
+    cout << "         Data Transaksi            \n";
+    cout << "====================================\n";
+
+    for (int i = 0; i < jumlah_transaksi; i++) {
+        int hariTransaksi, bulanTransaksi, tahunTransaksi;
+        parseTanggal(penjualan[i].waktu, hariTransaksi, bulanTransaksi, tahunTransaksi);
+
+        bool tampilkan = false;
+
+        if (pilihan == 1 && hariTransaksi == hariSekarang && bulanTransaksi == bulanSekarang && tahunTransaksi == tahunSekarang) {
+            tampilkan = true;
+        } else if (pilihan == 2 && bulanTransaksi == bulanSekarang && tahunTransaksi == tahunSekarang) {
+            tampilkan = true;
+        } else if (pilihan == 3 && tahunTransaksi == tahunSekarang) {
+            tampilkan = true;
+        }
+
+        if (tampilkan) {
+            cout << "Metode Pembayaran: " << penjualan[i].metodePembayaran << endl;
+            cout << "Waktu Transaksi: " << penjualan[i].waktu << endl;
+            cout << "Detail Barang:\n";
+
+            for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
+                cout << "Nama Barang: " << penjualan[i].barang[j].nama_barang << endl;
+                cout << "Harga: " << penjualan[i].barang[j].harga_barang << endl;
+                cout << "Jumlah: " << penjualan[i].barang[j].stok_barang << endl;
+            }
+            
+            cout << "Total Transaksi: " << penjualan[i].total << endl;
+            cout << "------------------------------------\n";
+        }
+    }
+
+    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+    system("pause > null");
 }
 
 int main()
@@ -364,6 +487,7 @@ int main()
     char pilihan;
 
     do{
+        system("cls");
         cout << "====================================\n";
         cout << "  Aplikasi Kasir Suka Maju Bersama  \n";
         cout << "====================================\n";
@@ -402,6 +526,8 @@ int main()
                     break;
             case '0': break;
             default: cout << "Pilihan tidak valid. Coba lagi.\n";
+                    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                    system("pause > null");
                     break;
         }
     } while (pilihan != '0');
