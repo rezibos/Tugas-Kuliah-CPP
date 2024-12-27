@@ -35,6 +35,9 @@ void tambahBarang() {
     do {
         if (jumlah_barang >= MAX) {
             cout << "Data Penuh! Tidak dapat menambahkan barang baru.\n";
+
+            cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+            system("pause > null");
             return;
         } else {
             cout << "====================================\n";
@@ -46,7 +49,7 @@ void tambahBarang() {
 
             for (int i = 0; i < jumlah_barang; i++) {
                 if (inventaris[i].id_barang == inventaris[jumlah_barang].id_barang) {
-                    cout << "Barang Dengan ID Tersebut Sudah Ada!\n";
+                    cout << "ID Tersebut Sudah Ada!\n";
 
                     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
                     system("pause > null");
@@ -453,6 +456,7 @@ void laporanTransaksi() {
         cout << "         Tidak Ada Transaksi        \n";
         cout << "====================================\n";
         cout << "Tidak ada transaksi yang dapat ditampilkan.\n";
+        
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
         return;
