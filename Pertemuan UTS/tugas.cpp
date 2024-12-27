@@ -43,15 +43,43 @@ void tambahBarang() {
 
             cout << "Masukkan ID Barang : ";
             cin >> inventaris[jumlah_barang].id_barang;
+
+            for (int i = 0; i < jumlah_barang; i++) {
+                if (inventaris[i].id_barang == inventaris[jumlah_barang].id_barang) {
+                    cout << "Barang Dengan ID Tersebut Sudah Ada!\n";
+
+                    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                    system("pause > null");
+                    return;
+                }
+            }
+
             cout << "Masukkan Nama Barang : ";
             cin >> inventaris[jumlah_barang].nama_barang;
+
             cout << "Masukkan Harga Barang : ";
             cin >> inventaris[jumlah_barang].harga_barang;
+            if (inventaris[jumlah_barang].harga_barang < 0) {
+                cout << "Harga tidak boleh negatif!\n";
+
+                cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                system("pause > null");
+                return;
+            }
+
             cout << "Masukkan Stok Barang : ";
             cin >> inventaris[jumlah_barang].stok_barang;
+            if (inventaris[jumlah_barang].stok_barang < 0) {
+                cout << "Stok tidak boleh negatif!\n";
+
+                cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                system("pause > null");
+                return;
+            }
+
             jumlah_barang++;
 
-                cout << "\nBarang Berhasil Ditambahkan!\n";
+            cout << "\nBarang Berhasil Ditambahkan!\n";
         }
         
         cout << "====================================\n";
@@ -84,10 +112,25 @@ void editBarang() {
 
             cout << "Masukkan Nama Barang : ";
             cin >> inventaris[i].nama_barang;
+
             cout << "Masukkan Harga Barang : ";
             cin >> inventaris[i].harga_barang;
+            if (inventaris[jumlah_barang].harga_barang < 0) {
+                cout << "Harga tidak boleh negatif!\n";
+
+                cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                system("pause > null");
+                return;
+            }
             cout << "Masukkan Stok Barang : ";
             cin >> inventaris[i].stok_barang;
+            if (inventaris[jumlah_barang].stok_barang < 0) {
+                cout << "Stok tidak boleh negatif!\n";
+
+                cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                system("pause > null");
+                return;
+            }
             cout << "====================================\n";
 
             cout << "\nBarang berhasil diperbarui!\n";
@@ -413,9 +456,9 @@ void laporanTransaksi() {
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
         return;
-    }
+    } 
 
-    int pilihan, filter_day, filter_month, filter_year;
+    int pilihan, filter_hari, filter_bulan, filter_tahun;
     cout << "=================================================================================\n";
     cout << "                           Filter Laporan Transaksi                              \n";
     cout << "=================================================================================\n";
@@ -428,87 +471,91 @@ void laporanTransaksi() {
     switch(pilihan) {
         case 1:
             cout << "Masukkan tanggal (DD): ";
-            cin >> filter_day;
+            cin >> filter_hari;
             cout << "Masukkan bulan (MM): ";
-            cin >> filter_month;
+            cin >> filter_bulan;
             cout << "Masukkan tahun (YYYY): ";
-            cin >> filter_year;
+            cin >> filter_tahun;
             break;
         case 2:
-            filter_day = 0;
+            filter_hari = 0;
             cout << "Masukkan bulan (MM): ";
-            cin >> filter_month;
+            cin >> filter_bulan;
             cout << "Masukkan tahun (YYYY): ";
-            cin >> filter_year;
+            cin >> filter_tahun;
             break;
         case 3:
-            filter_day = 0;
-            filter_month = 0;
+            filter_hari = 0;
+            filter_bulan = 0;
             cout << "Masukkan tahun (YYYY): ";
-            cin >> filter_year;
+            cin >> filter_tahun;
             break;
     }
+
+    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+    system("pause > null");
+    system("cls");
     
     cout << "\n=================================================================================\n";
-    cout << "                 Hasil Transaksi Yang Di Data Transaksi Txt                      \n";
+    cout << "                    Data Transaksi Yang Tersimpan                                \n";
     cout << "=================================================================================\n\n";
 
     cout << "=================================================================================\n";
     cout << "| " << setw(15) << left << "Jumlah Barang" << " | "
         << setw(15) << left << "Total Harga" << " | "
-        << setw(18) << left << "Metode Pembayaran" << " | "
+        << setw(18) << left << "Metode Bayar" << " | "
         << setw(20) << left << "Waktu Transaksi" << " |\n";
     cout << "=================================================================================\n";
 
-    string line;
-    int count = 0;
-    char dummy;
+    string baris;
+    int jumlah = 0;
+    char pemisah;
 
-    while (getline(file, line)) {
-        stringstream ss(line);
+    while (getline(file, baris)) {
+        stringstream ss(baris);
         string jumlah_barang, total_harga, metode, tanggal;
         
-        ss >> dummy;
+        ss >> pemisah;
         ss >> jumlah_barang;
-        ss >> dummy;
+        ss >> pemisah;
         ss >> total_harga;
-        ss >> dummy;
+        ss >> pemisah;
         ss >> metode;
-        ss >> dummy;
+        ss >> pemisah;
         ss >> tanggal;
 
-        int day, month, year;
-        sscanf(tanggal.c_str(), "%d-%d-%d", &day, &month, &year);
+        int hari, bulan, tahun;
+        sscanf(tanggal.c_str(), "%d-%d-%d", &hari, &bulan, &tahun);
 
-        bool show_record = false;
+        bool tampilkan_data = false;
         switch (pilihan) {
             case 1:
-                if (day == filter_day && month == filter_month && year == filter_year) {
-                    show_record = true;
+                if (hari == filter_hari && bulan == filter_bulan && tahun == filter_tahun) {
+                    tampilkan_data = true;
                 }
                 break;
             case 2:
-                if (month == filter_month && year == filter_year) {
-                    show_record = true;
+                if (bulan == filter_bulan && tahun == filter_tahun) {
+                    tampilkan_data = true;
                 }
                 break;
             case 3:
-                if (year == filter_year) {
-                    show_record = true;
+                if (tahun == filter_tahun) {
+                    tampilkan_data = true;
                 }
                 break;
         }
 
-        if (show_record) {
+        if (tampilkan_data) {
             cout << "| " << setw(15) << left << jumlah_barang << " | "
                 << setw(15) << left << total_harga << " | "
                 << setw(18) << left << metode << " | "
                 << setw(20) << left << tanggal << " |\n";
-            count++;
+            jumlah++;
         }
     }
 
-    if (count == 0) {
+    if (jumlah == 0) {
         cout << "Tidak ada transaksi untuk periode yang dipilih.\n";
     }
 

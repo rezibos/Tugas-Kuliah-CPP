@@ -14,6 +14,7 @@
         "iomanip": "cpp",
         "vector": "cpp",
         "ios": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "iosfwd": "cpp"
     },
 }
