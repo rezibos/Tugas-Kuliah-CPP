@@ -46,7 +46,6 @@ void tambahBarang() {
 
             cout << "Masukkan ID Barang : ";
             cin >> inventaris[jumlah_barang].id_barang;
-
             for (int i = 0; i < jumlah_barang; i++) {
                 if (inventaris[i].id_barang == inventaris[jumlah_barang].id_barang) {
                     cout << "ID Tersebut Sudah Ada!\n";
@@ -59,6 +58,15 @@ void tambahBarang() {
 
             cout << "Masukkan Nama Barang : ";
             cin >> inventaris[jumlah_barang].nama_barang;
+            for (int i = 0; i < jumlah_barang; i++) {
+                if (inventaris[i].nama_barang == inventaris[jumlah_barang].nama_barang) {
+                    cout << "Nama Barang Tersebut Sudah Ada!\n";
+
+                    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                    system("pause > null");
+                    return;
+                }
+            }
 
             cout << "Masukkan Harga Barang : ";
             cin >> inventaris[jumlah_barang].harga_barang;
@@ -96,6 +104,9 @@ void tambahBarang() {
 void editBarang() {
     system("cls");
     string id_barang;
+    int harga_baru;
+    string nama_baru;
+    int stok_baru;
 
     cout << "====================================\n";
     cout << "             Edit Barang            \n";
@@ -113,29 +124,45 @@ void editBarang() {
             cout << "Stok Barang  : " << inventaris[i].stok_barang << "\n";
             cout << "====================================\n";
 
-            cout << "Masukkan Nama Barang : ";
-            cin >> inventaris[i].nama_barang;
+            cout << "Masukkan Nama Barang Baru : ";
+            cin >> nama_baru;
 
-            cout << "Masukkan Harga Barang : ";
-            cin >> inventaris[i].harga_barang;
-            if (inventaris[jumlah_barang].harga_barang < 0) {
+            for (int j = 0; j < jumlah_barang; j++) {
+                if (inventaris[j].nama_barang == nama_baru && inventaris[j].id_barang != id_barang) {
+                    cout << "Nama Barang Tersebut Sudah Ada!\n";
+
+                    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                    system("pause > null");
+                    return;
+                }
+            }
+            inventaris[i].nama_barang = nama_baru;
+
+            cout << "Masukkan Harga Barang Baru : ";
+            cin >> harga_baru;
+
+            if (harga_baru < 0) {
                 cout << "Harga tidak boleh negatif!\n";
 
                 cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
                 system("pause > null");
                 return;
             }
-            cout << "Masukkan Stok Barang : ";
-            cin >> inventaris[i].stok_barang;
-            if (inventaris[jumlah_barang].stok_barang < 0) {
+            inventaris[i].harga_barang = harga_baru;
+
+            cout << "Masukkan Stok Barang Baru : ";
+            cin >> stok_baru;
+
+            if (stok_baru < 0) {
                 cout << "Stok tidak boleh negatif!\n";
 
                 cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
                 system("pause > null");
                 return;
             }
-            cout << "====================================\n";
+            inventaris[i].stok_barang = stok_baru;
 
+            cout << "====================================\n";
             cout << "\nBarang berhasil diperbarui!\n";
 
             cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
@@ -143,12 +170,11 @@ void editBarang() {
             return;
         }
     }
-    
-    cout << "ID Barang tidak ditemukan.\n";
 
-    cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+    cout << "ID Barang tidak ditemukan.\n";
     system("pause > null");
 }
+
 
 void hapusBarang(){
     system("cls");
@@ -311,9 +337,9 @@ void ProsesTransaksi(){
                     }
             }
         }
-        system("cls");
         cout << "\n\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
+        system("cls");
         
         bool inputValid = false;
         do {
@@ -342,7 +368,7 @@ void ProsesTransaksi(){
                 system("pause > null");
                 break;
         }
-    } while (!inputValid);
+    } while (inputValid == false);
 
         transaksi.total = total;
         transaksi.waktu = dapatkanWaktuSekarang();
@@ -350,7 +376,13 @@ void ProsesTransaksi(){
         if (jumlah_transaksi < MAX) {
             penjualan[jumlah_transaksi++] = transaksi;
 
-            cout << "\nTransaksi selesai!\n";
+            cout << "\n====================================\n";
+            cout << "           Transaksi selesai!       \n";
+            cout << "====================================\n";
+
+            cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+            system("pause > null");
+            system("cls");
 
             cout << "=============================================================================================\n";
             cout << "                                    Hasil Dari Belanjaan Anda                                \n";
