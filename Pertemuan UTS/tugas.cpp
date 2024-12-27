@@ -515,8 +515,10 @@ void laporanTransaksi() {
     cout << "1. Laporan Harian\n";
     cout << "2. Laporan Bulanan\n";
     cout << "3. Laporan Tahunan\n";
+    cout << "=================================================================================\n";
     cout << "Pilih filter (1-3): ";
     cin >> pilihan;
+    cout << "=================================================================================\n";
     
     switch(pilihan) {
         case 1:
