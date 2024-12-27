@@ -63,7 +63,7 @@ void tambahBarang() {
             cout << "Masukkan Harga Barang : ";
             cin >> inventaris[jumlah_barang].harga_barang;
             if (inventaris[jumlah_barang].harga_barang < 0) {
-                cout << "Harga tidak boleh negatif!\n";
+                cout << "Harga Tidak Boleh Negatif!\n";
 
                 cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
                 system("pause > null");
@@ -73,7 +73,7 @@ void tambahBarang() {
             cout << "Masukkan Stok Barang : ";
             cin >> inventaris[jumlah_barang].stok_barang;
             if (inventaris[jumlah_barang].stok_barang < 0) {
-                cout << "Stok tidak boleh negatif!\n";
+                cout << "Stok Tidak Boleh Negatif!\n";
 
                 cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
                 system("pause > null");
@@ -249,7 +249,7 @@ void ProsesTransaksi(){
     system("cls");
     string namaBarang;
     int jumlah;
-    int pilihan;
+    char pilihan;
     Transaksi transaksi;
 
     double total_barang;
@@ -305,30 +305,44 @@ void ProsesTransaksi(){
                         }
                         break;
                     }
-                    
+                }
                     if (ada_tidak == false) {
                         cout << "Nama Barang tidak ditemukan \n";
                     }
-                }
-                
             }
         }
+        system("cls");
+        cout << "\n\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
         
+        bool inputValid = false;
+        do {
+        system("cls");
         TampilkanMetodePembayaranProses();
-        cout << "Pilih metode pembayaran : ";
+        cout << "Pilih metode pembayaran (1-3) : ";
         cin >> pilihan;
         cout << "====================================\n";
 
         switch (pilihan) {
-            case 1: transaksi.metodePembayaran = "Tunai"; 
-                    break;
-            case 2: transaksi.metodePembayaran = "Kartu Kredit"; 
-                    break;
-            case 3: transaksi.metodePembayaran = "Dompet Digital"; 
-                    break;
-            default: transaksi.metodePembayaran = "Pilihan Tidak Ditemukan";
-                    break;
+            case '1':
+                transaksi.metodePembayaran = "Tunai";
+                inputValid = true;
+                break;
+            case '2':
+                transaksi.metodePembayaran = "Kartu Kredit";
+                inputValid = true;
+                break;
+            case '3':
+                transaksi.metodePembayaran = "Dompet Digital";
+                inputValid = true;
+                break;
+            default:
+                cout << "Pilihan tidak valid, silakan coba lagi.\n";
+                cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+                system("pause > null");
+                break;
         }
+    } while (!inputValid);
 
         transaksi.total = total;
         transaksi.waktu = dapatkanWaktuSekarang();
@@ -456,7 +470,7 @@ void laporanTransaksi() {
         cout << "         Tidak Ada Transaksi        \n";
         cout << "====================================\n";
         cout << "Tidak ada transaksi yang dapat ditampilkan.\n";
-        
+
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
         return;
