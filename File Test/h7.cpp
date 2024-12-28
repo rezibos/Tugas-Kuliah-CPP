@@ -381,7 +381,6 @@ void bacaDataDariFile() {
         inventaris.push_back(barangBaru);
     }
     file.close();
-
 }
 
 int main() {

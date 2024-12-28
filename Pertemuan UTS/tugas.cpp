@@ -28,47 +28,6 @@ Transaksi penjualan[MAX];
 int jumlah_barang = 0;
 int jumlah_transaksi = 0;
 
-void SimpanInventoriKeFile() {
-    ofstream file("databarang.txt");
-
-    for (int i = 0; i < jumlah_barang; i++) {
-        file << "| " << setw(12) << left << inventaris[i].id_barang << " | "
-            << setw(18) << left << inventaris[i].nama_barang << " | "
-            << setw(15) << left << inventaris[i].harga_barang << " | "
-            << setw(14) << left << inventaris[i].stok_barang << " |\n";
-    }
-
-    file.close();
-}
-
-void BacaInventoriDariFile() {
-    ifstream file("databarang.txt");
-
-    jumlah_barang = 0;
-    string baris;
-
-    while (getline(file, baris) && jumlah_barang < MAX) {
-        stringstream ss(baris);
-        string token;
-        
-        getline(ss, token, '|');
-        inventaris[jumlah_barang].id_barang = token;
-        
-        getline(ss, token, '|');
-        inventaris[jumlah_barang].nama_barang = token;
-        
-        getline(ss, token, '|');
-        inventaris[jumlah_barang].harga_barang = stod(token);
-        
-        getline(ss, token, '|');
-        inventaris[jumlah_barang].stok_barang = stoi(token);
-        
-        jumlah_barang++;
-    }
-
-    file.close();
-}
-
 void tambahBarang() {
     system("cls");
     char pilihan;
@@ -130,7 +89,6 @@ void tambahBarang() {
             }
 
             jumlah_barang++;
-            SimpanInventoriKeFile();
 
             cout << "\nBarang Berhasil Ditambahkan!\n";
         }
@@ -204,8 +162,6 @@ void editBarang() {
             }
             inventaris[i].stok_barang = stok_baru;
 
-            SimpanInventoriKeFile();
-
             cout << "====================================\n";
             cout << "\nBarang berhasil diperbarui!\n";
 
@@ -240,7 +196,6 @@ void hapusBarang(){
             }
 
             jumlah_barang--;
-            SimpanInventoriKeFile();
             cout << "Barang berhasil dihapus!\n";
 
             cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
@@ -453,7 +408,7 @@ void ProsesTransaksi(){
             cout << "Metode Pembayaran : " << transaksi.metodePembayaran << "\n";
             cout << "Total Keseluruhan Item Yang Dibeli : " << transaksi.jumlah_barang << "\n";
             cout << "Total Keseluruhan Jumlah Barang Yang Dibeli : " << total_jumlah_barang << "\n";
-            cout << "Total Keseluruhan Harga Barang Yang Di Beli : Rp. " << total << fixed << setprecision(2)  << "\n";
+            cout << "Total Keseluruhan Harga Barang Yang Di Beli : Rp. " << total << "\n";
         } else {
             cout << "Maaf, Jumlah Transaksi Telah Penuh \n";
         }
@@ -664,7 +619,6 @@ void laporanTransaksi() {
 
 int main()
 {
-    SimpanInventoriKeFile();
     char pilihan;
 
     do{
