@@ -2,8 +2,10 @@
 using namespace std;
 
 void tambahBarang(){
+    system("cls");
+    cout << "abc" << endl;
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
-    system("pause > null");
+    system("pause  > null");
 }
 
 int main()

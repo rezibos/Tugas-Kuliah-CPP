@@ -125,7 +125,7 @@ void tambahBarang() {
                 system("pause > null");
                 return;
             }
-
+            
             jumlah_barang++;
             simpanBarangKeFile();
             cout << "\nBarang Berhasil Ditambahkan!\n";
@@ -391,11 +391,11 @@ void ProsesTransaksi(){
                 inputValid = true;
                 break;
             case '2':
-                transaksi.metodePembayaran = "Kartu Kredit";
+                transaksi.metodePembayaran = "Debit";
                 inputValid = true;
                 break;
             case '3':
-                transaksi.metodePembayaran = "Dompet Digital";
+                transaksi.metodePembayaran = "QR";
                 inputValid = true;
                 break;
             default:
@@ -510,7 +510,7 @@ void SimpanTransaksikeFile(){
 
             cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
             system("pause > null");
-            return; 
+            return;
         } else {
             for (int i = 0; i < jumlah_transaksi; i++) {
                 for (int j = 0; j < penjualan[i].jumlah_barang; j++) {

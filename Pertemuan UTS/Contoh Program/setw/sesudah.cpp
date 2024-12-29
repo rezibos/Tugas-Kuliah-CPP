@@ -4,6 +4,7 @@ using namespace std;
 
 int main()
 {
-    string str = "wdhsgadhawgd";
-    cout << "sesudah:\n" << setw(20) << str << endl;
+    string str = "111111111111111111111";
+    cout << "sesudah:\n"<< "|" << left << setw(30)  << str << "|" << endl;
+    
 }

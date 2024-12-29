@@ -2,13 +2,14 @@
 using namespace std;
 
 void tambahBarang(){
-    
+    cout << "abc" << endl;
 }
 
 int main()
 {
     char pilihan;
     do{
+        
         system("cls");
         cout << "====================================\n";
         cout << "  Aplikasi Kasir Suka Maju Bersama  \n";
