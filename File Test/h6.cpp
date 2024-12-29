@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <ctime>
 #include <limits>
+#include <string>
 
 using namespace std;
 

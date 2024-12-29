@@ -514,7 +514,8 @@ void SimpanTransaksikeFile(){
         } else {
             for (int i = 0; i < jumlah_transaksi; i++) {
                 for (int j = 0; j < penjualan[i].jumlah_barang; j++) {
-                    file << "| " << setw(15) << left << penjualan[i].barang[j].stok_barang << " | "
+                    file << "| " << setw(20) << left << penjualan[i].barang[j].nama_barang << " | "
+                        << setw(15) << left << penjualan[i].barang[j].stok_barang << " | "
                         << setw(15) << left  << penjualan[i].barang[j].harga_barang * penjualan[i].barang[j].stok_barang << " | "
                         << setw(18) << left  << penjualan[i].metodePembayaran << " | "
                         << setw(20) << left  << penjualan[i].waktu << " |\n";
@@ -555,8 +556,8 @@ void laporanTransaksi() {
     cout << "Pilih filter (1-3): ";
     cin >> pilihan;
     cout << "=================================================================================\n";
-    
-    switch(pilihan) {
+
+    switch (pilihan) {
         case 1:
             cout << "Masukkan tanggal (DD): ";
             cin >> filter_hari;
@@ -583,26 +584,29 @@ void laporanTransaksi() {
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
     system("cls");
-    
-    cout << "\n=================================================================================\n";
-    cout << "                    Data Transaksi Yang Tersimpan                                \n";
-    cout << "=================================================================================\n\n";
 
-    cout << "=================================================================================\n";
-    cout << "| " << setw(15) << left << "Jumlah Barang" << " | "
+    cout << "\n========================================================================================================\n";
+    cout << "                                       Data Transaksi Yang Tersimpan                                      \n";
+    cout << "========================================================================================================\n\n";
+
+    cout << "========================================================================================================\n";
+    cout << "| " << setw(20) << left << "Nama Barang" << " | "
+        << setw(15) << left << "Jumlah Barang" << " | "
         << setw(15) << left << "Total Harga" << " | "
         << setw(18) << left << "Metode Bayar" << " | "
         << setw(20) << left << "Waktu Transaksi" << " |\n";
-    cout << "=================================================================================\n";
+    cout << "========================================================================================================\n";
 
     string baris;
     int jumlah = 0;
-    char pemisah;
 
     while (getline(file, baris)) {
         stringstream ss(baris);
-        string jumlah_barang, total_harga, metode, tanggal;
-        
+        string nama_barang, jumlah_barang, total_harga, metode, tanggal;
+        char pemisah;
+
+        ss >> pemisah;
+        ss >> nama_barang;
         ss >> pemisah;
         ss >> jumlah_barang;
         ss >> pemisah;
@@ -635,7 +639,8 @@ void laporanTransaksi() {
         }
 
         if (tampilkan_data) {
-            cout << "| " << setw(15) << left << jumlah_barang << " | "
+            cout << "| " << setw(20) << left << nama_barang << " | "
+                << setw(15) << left << jumlah_barang << " | "
                 << setw(15) << left << total_harga << " | "
                 << setw(18) << left << metode << " | "
                 << setw(20) << left << tanggal << " |\n";
@@ -647,7 +652,7 @@ void laporanTransaksi() {
         cout << "Tidak ada transaksi untuk periode yang dipilih.\n";
     }
 
-    cout << "=================================================================================\n";
+    cout << "========================================================================================================\n";
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
     file.close();
