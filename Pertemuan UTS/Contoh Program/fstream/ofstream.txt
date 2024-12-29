@@ -1,0 +1,1 @@
+ofstream : Kelas yang dapat menulis ke file yang udah kita buat

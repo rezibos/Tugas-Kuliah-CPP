@@ -1,0 +1,29 @@
+time_t adalah tipe data bawaan C untuk menyimpan waktu dalam format "epoch time" (jumlah detik sejak 1 Januari 1970 pukul 00:00 UTC).
+time(0) mengembalikan waktu saat ini dalam epoch time, dan hasilnya disimpan dalam variabel sekarang
+
+tm *ltm = localtime(&sekarang);
+
+Fungsi localtime() mengonversi nilai epoch time menjadi struktur tm, yang menyimpan waktu dalam format lokal (tahun, bulan, hari, jam, dll.).
+&sekarang adalah pointer ke variabel sekarang.
+Variabel ltm akan menunjuk ke struktur tm yang berisi informasi waktu lokal.
+
+
+int tm_sec;   // detik (0-59)
+int tm_min;   // menit (0-59)
+int tm_hour;  // jam (0-23)
+int tm_mday;  // hari dalam bulan (1-31)
+int tm_mon;   // bulan (0-11, Januari = 0)
+int tm_year;  // tahun sejak 1900
+int tm_wday;  // hari dalam minggu (0-6, Minggu = 0)
+int tm_yday;  // hari dalam tahun (0-365)
+int tm_isdst; // daylight saving time
+
+
+"%d-%m-%Y"
+
+%d: Hari dalam dua digit (01–31).
+%m: Bulan dalam dua digit (01–12).
+%Y: Tahun dalam empat digit.
+
+return string(buffer);
+Konversi buffer (array karakter) menjadi objek string C++ dan mengembalikannya sebagai hasil fungsi.

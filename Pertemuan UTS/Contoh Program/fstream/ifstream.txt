@@ -1,0 +1,1 @@
+ifstream : Kelas yang dapat membaca dari file kelas ini juga lah yang membikin file yang kita udah tetapkan

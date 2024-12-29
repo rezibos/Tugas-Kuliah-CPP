@@ -1,0 +1,11 @@
+
+# stringstream ss(baris)
+Fungsi ini membaca satu baris teks dari file ke dalam variabel string baris.
+file adalah objek file input, sementara baris adalah string yang akan menyimpan teks dari file tersebut.
+
+# stringstream ss(baris)
+Membuat objek stringstream bernama ss dengan isi yang sama seperti baris.
+Ini memungkinkan Anda memproses string baris seperti membaca data dari file atau stream.
+
+ss >> pemisah; : Membaca karakter pemisah pertama dari stream ss.
+ss >> nama_barang; : Membaca string pertama yang mewakili nama barang.
