@@ -1,61 +1,127 @@
-1. Run program / Mulai
+Panduan Penggunaan Aplikasi Kasir Suka Maju Bersama
+Menu Utama
+Aplikasi ini memiliki 10 fitur utama yang dapat diakses melalui menu utama:
 
-2. Tampilan Awal User
-    ========================================
-        Aplikasi Kasir Suka Maju Bersama
-    ========================================
-        1. Tambah Barang 
-        2. Edit Barang 
-        3. Hapus Barang 
-        4. Tampilkan Semua Barang
-        5. Tampilkan Metode Pembayaran
-        6. Proses Transaksi
-        7. Buat Laporan Penjualan
-        8. Simpan Transaksi ke File
-        9. Tampil Semua Laporan Transaksi
-        0. Keluar
-    ========================================
+1. Tambah Barang
+2. Edit Barang
+3. Hapus Barang
+4. Tampilkan Semua Barang
+5. Tampilkan Metode Pembayaran
+6. Proses Transaksi
+7. Buat Laporan Penjualan
+8. Simpan Transaksi ke File
+9. Tampil Semua Laporan Transaksi
+0. Keluar
 
-3. User Memasukan Input
-    ========================================
-        Masukkan Pilihan Anda : 
-        INPUT Pilihan
-    ========================================
+Cara Penggunaan Setiap Fitur
+1. Tambah Barang
 
-4. Jika memilih menu 1 maka muncul
-    ========================================
-        Masukan ID Barang :
-        INPUT ID Barang
+Pilih menu "1" pada menu utama
+Masukkan ID Barang (harus unik)
+Masukkan Nama Barang (harus unik)
+Masukkan Harga Barang (tidak boleh negatif)
+Masukkan Stok Barang (tidak boleh negatif)
+Sistem akan menanyakan apakah ingin menambah barang lagi (y/n)
+Pilih 'y' untuk menambah barang lain atau 'n' untuk kembali ke menu utama
 
-        Masukan Nama Barang :
-        INPUT Nama Barang
+2. Edit Barang
 
-        Masukan Harga Barang :
-        INPUT Harga Barang
+Pilih menu "2" pada menu utama
+Masukkan ID Barang yang ingin diubah
+Jika barang ditemukan, masukkan:
 
-        Masukan Stok Barang :
-        INPUT Stok Barang
+Nama Barang baru
+Harga Barang baru
+Stok Barang baru
 
-    ========================================
 
-5. Jika barang berhasil di
+Sistem akan menyimpan perubahan dan kembali ke menu utama
 
-5. Jika data berhasil di tambahkan maka muncul
-    ========================================
+3. Hapus Barang
 
-    Apakah Anda Ingin Menambahkan Barang (y/n)
-    INPUT Pilih
+Pilih menu "3" pada menu utama
+Masukkan ID Barang yang ingin dihapus
+Sistem akan menghapus barang jika ditemukan
+Tekan tombol apa saja untuk kembali ke menu utama
 
-    ========================================
+4. Tampilkan Semua Barang
 
-6. Jika y maka data akan muncul seperti nomor 4
+Pilih menu "4" pada menu utama
+Sistem akan menampilkan tabel berisi semua barang dengan informasi:
 
-7. Jika t maka data akan muncul seperti nomor 2
+ID Barang
+Nama Barang
+Harga Barang
+Stok Barang
 
-8. Jika memilih menu 2 maka muncul
-9. Jika memilih menu 3 maka muncul
-10. Jika memilih menu 4 maka muncul
-11. Jika memilih menu 5 maka muncul
-12. Jika memilih menu 6 maka muncul
-13. Jika memilih menu 7 maka keluar program
-14. Selesai
+
+Tekan tombol apa saja untuk kembali ke menu utama
+
+5. Tampilkan Metode Pembayaran
+
+Pilih menu "5" pada menu utama
+Sistem akan menampilkan metode pembayaran yang tersedia:
+
+Tunai
+Kartu Kredit
+Dompet Digital
+
+
+Tekan tombol apa saja untuk kembali ke menu utama
+
+6. Proses Transaksi
+
+Pilih menu "6" pada menu utama
+Masukkan nama barang yang ingin dibeli
+Masukkan jumlah barang yang diinginkan
+Ulangi langkah 2-3 untuk barang lain
+Ketik 'sudah' jika selesai memilih barang
+Pilih metode pembayaran (1-3)
+Sistem akan menampilkan struk belanja dengan rincian:
+
+Daftar barang yang dibeli
+Jumlah masing-masing barang
+Harga per barang
+Subtotal per barang
+Total keseluruhan
+
+
+Tekan tombol apa saja untuk kembali ke menu utama
+
+7. Buat Laporan Penjualan
+
+Pilih menu "7" pada menu utama
+Sistem akan menampilkan tabel berisi semua transaksi dengan informasi:
+
+Nomor transaksi
+Nama barang
+Jumlah
+Total harga
+Metode pembayaran
+Waktu transaksi
+
+
+Tekan tombol apa saja untuk kembali ke menu utama
+
+8. Simpan Transaksi ke File
+
+Pilih menu "8" pada menu utama
+Sistem akan menyimpan semua transaksi ke dalam file
+Tekan tombol apa saja untuk kembali ke menu utama
+
+9. Tampil Semua Laporan Transaksi
+
+Pilih menu "9" pada menu utama
+Pilih filter laporan:
+
+Laporan Harian (masukkan tanggal, bulan, tahun)
+Laporan Bulanan (masukkan bulan, tahun)
+Laporan Tahunan (masukkan tahun)
+
+
+Sistem akan menampilkan transaksi sesuai filter yang dipilih
+Tekan tombol apa saja untuk kembali ke menu utama
+
+Cara Keluar dari Aplikasi
+
+Pilih menu "0" pada menu utama untuk keluar dari aplikasi
