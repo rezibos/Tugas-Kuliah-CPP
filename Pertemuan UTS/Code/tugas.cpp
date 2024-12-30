@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <ctime>
 #include <sstream>
+#include <string>
 using namespace std;
 
 const int MAX = 100;
@@ -29,7 +30,7 @@ int jumlah_barang = 0;
 int jumlah_transaksi = 0;
 
 void simpanBarangKeFile() {
-    ofstream file("databarang.txt");
+    ofstream file("databarang.doc");
     if (file.is_open()) {
         for (int i = 0; i < jumlah_barang; i++) {
             file << inventaris[i].id_barang << ","
@@ -44,31 +45,41 @@ void simpanBarangKeFile() {
 }
 
 void bacaBarangDariFile() {
-    ifstream file("databarang.txt");
-    string line;
-    jumlah_barang = 0;
-
-    if (file.is_open()) {
-        while (getline(file, line) && jumlah_barang < MAX) {
-            stringstream ss(line);
-            string token;
-            
-            getline(ss, token, ',');
-            inventaris[jumlah_barang].id_barang = token;
-            
-            getline(ss, token, ',');
-            inventaris[jumlah_barang].nama_barang = token;
-            
-            getline(ss, token, ',');
-            inventaris[jumlah_barang].harga_barang = stod(token);
-            
-            getline(ss, token, ',');
-            inventaris[jumlah_barang].stok_barang = stoi(token);
-            
-            jumlah_barang++;
-        }
-        file.close();
+    ifstream file("databarang.doc");
+    if (!file) {
+        cout << "File data_barang.txt tidak ditemukan.\n";
+        return;
     }
+
+    jumlah_barang = 0;
+    string line;
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string id, nama, harga, stok;
+
+        getline(ss, id, ',');
+        getline(ss, nama, ',');
+        getline(ss, harga, ',');
+        getline(ss, stok, ',');
+
+        id = id.erase(0, id.find_first_not_of(" "));
+        nama = nama.erase(0, nama.find_first_not_of(" "));
+        harga = harga.erase(0, harga.find_first_not_of(" "));
+        stok = stok.erase(0, stok.find_first_not_of(" "));
+
+        inventaris[jumlah_barang].id_barang = id;
+        inventaris[jumlah_barang].nama_barang = nama;
+        inventaris[jumlah_barang].harga_barang = stod(harga);
+        inventaris[jumlah_barang].stok_barang = stoi(stok);
+
+        jumlah_barang++;
+        if (jumlah_barang >= MAX) {
+            cout << "Inventaris penuh, beberapa data tidak dimuat.\n";
+            break;
+        }
+    }
+
+    file.close();
 }
 
 void tambahBarang() {
@@ -88,6 +99,8 @@ void tambahBarang() {
 
             cout << "Masukkan ID Barang : ";
             cin >> inventaris[jumlah_barang].id_barang;
+            cin.ignore();
+
             for (int i = 0; i < jumlah_barang; i++) {
                 if (inventaris[i].id_barang == inventaris[jumlah_barang].id_barang) {
                     cout << "ID Tersebut Sudah Ada!\n";
@@ -98,7 +111,8 @@ void tambahBarang() {
             }
 
             cout << "Masukkan Nama Barang : ";
-            cin >> inventaris[jumlah_barang].nama_barang;
+            std::getline(cin, inventaris[jumlah_barang].nama_barang);
+
             for (int i = 0; i < jumlah_barang; i++) {
                 if (inventaris[i].nama_barang == inventaris[jumlah_barang].nama_barang) {
                     cout << "Nama Barang Tersebut Sudah Ada!\n";
@@ -134,6 +148,7 @@ void tambahBarang() {
         cout << "====================================\n";
         cout << "Apakah Anda Ingin Menambahkan Barang Lagi (y/n) : ";
         cin >> pilihan;
+        cin.ignore();
         
     } while (pilihan == 'Y' || pilihan == 'y');
 }
@@ -151,6 +166,7 @@ void editBarang() {
 
     cout << "Masukkan ID Barang yang ingin diubah: ";
     cin >> id_barang;
+    cin.ignore();
 
     for (int i = 0; i < jumlah_barang; i++) {
         if (inventaris[i].id_barang == id_barang) {
@@ -162,7 +178,7 @@ void editBarang() {
             cout << "====================================\n";
 
             cout << "Masukkan Nama Barang Baru : ";
-            cin >> nama_baru;
+            std::getline(cin, nama_baru);
 
             for (int j = 0; j < jumlah_barang; j++) {
                 if (inventaris[j].nama_barang == nama_baru && inventaris[j].id_barang != id_barang) {
@@ -281,8 +297,8 @@ void TampilkanMetodePembayaran(){
     cout << "   Metode pembayaran yang tersedia  \n";
     cout << "====================================\n";
     cout << "1. Tunai\n";
-    cout << "2. Kartu Kredit\n";
-    cout << "3. Dompet Digital\n";
+    cout << "2. Debit\n";
+    cout << "3. QR\n";
     cout << "====================================\n";
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
@@ -293,8 +309,8 @@ void TampilkanMetodePembayaranProses(){
     cout << "   Metode pembayaran yang tersedia  \n";
     cout << "====================================\n";
     cout << "1. Tunai\n";
-    cout << "2. Kartu Kredit\n";
-    cout << "3. Dompet Digital\n";
+    cout << "2. Debit\n";
+    cout << "3. QR\n";
     cout << "====================================\n";
 }
 
@@ -306,7 +322,7 @@ string dapatkanWaktuSekarang() {
     return string(buffer);
 }
 
-void ProsesTransaksi(){
+void ProsesTransaksi() {
     system("cls");
     bacaBarangDariFile();
     string namaBarang;
@@ -336,7 +352,8 @@ void ProsesTransaksi(){
         while (transaksiPenuh == false) {
             
             cout << "Masukkan Nama Barang (Atau 'sudah' Untuk Mengakhiri) : ";
-            cin >> namaBarang;
+            cin.ignore();
+            getline(cin, namaBarang);
             
             if (namaBarang == "sudah"){
                 break;
@@ -454,7 +471,6 @@ void ProsesTransaksi(){
     }
 }
 
-
 void BuatLaporanPenjualan(){
     system("cls");
     if (jumlah_transaksi == 0) {
@@ -503,7 +519,7 @@ void SimpanTransaksikeFile(){
         system("pause > null");
         return;
     } else {
-        ofstream file("datatransaksi.txt", ios::app);
+        ofstream file("datatransaksi.doc", ios::app);
 
         if (!file) {
             cout << "Gagal Membuka File Untuk Menyimpan Transaksi.\n";
@@ -532,7 +548,7 @@ void SimpanTransaksikeFile(){
 
 void laporanTransaksi() {
     system("cls");
-    ifstream file("datatransaksi.txt");
+    ifstream file("datatransaksi.doc");
 
     if (!file) {
         cout << "====================================\n";
@@ -545,7 +561,7 @@ void laporanTransaksi() {
         return;
     } 
 
-    int pilihan, filter_hari, filter_bulan, filter_tahun;
+    int pilihan, filter_hari = 0, filter_bulan = 0, filter_tahun = 0;
     cout << "=================================================================================\n";
     cout << "                           Filter Laporan Transaksi                              \n";
     cout << "=================================================================================\n";
@@ -557,29 +573,16 @@ void laporanTransaksi() {
     cin >> pilihan;
     cout << "=================================================================================\n";
 
-    switch (pilihan) {
-        case 1:
-            cout << "Masukkan tanggal (DD): ";
-            cin >> filter_hari;
-            cout << "Masukkan bulan (MM): ";
-            cin >> filter_bulan;
-            cout << "Masukkan tahun (YYYY): ";
-            cin >> filter_tahun;
-            break;
-        case 2:
-            filter_hari = 0;
-            cout << "Masukkan bulan (MM): ";
-            cin >> filter_bulan;
-            cout << "Masukkan tahun (YYYY): ";
-            cin >> filter_tahun;
-            break;
-        case 3:
-            filter_hari = 0;
-            filter_bulan = 0;
-            cout << "Masukkan tahun (YYYY): ";
-            cin >> filter_tahun;
-            break;
+    if (pilihan == 1) {
+        cout << "Masukkan tanggal (DD): ";
+        cin >> filter_hari;
     }
+    if (pilihan <= 2) {
+        cout << "Masukkan bulan (MM): ";
+        cin >> filter_bulan;
+    }
+    cout << "Masukkan tahun (YYYY): ";
+    cin >> filter_tahun;
 
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
@@ -597,45 +600,48 @@ void laporanTransaksi() {
         << setw(20) << left << "Waktu Transaksi" << " |\n";
     cout << "========================================================================================================\n";
 
-    string baris;
+    string line;
     int jumlah = 0;
+    
+    while (getline(file, line)) {
+        if (line.empty() || line.find('|') == string::npos) continue;
+        
+        stringstream ss(line);
+        string temp, nama_barang, jumlah_barang, total_harga, metode, tanggal;
+        
+        getline(ss, temp, '|');
+        getline(ss, nama_barang, '|');
+        getline(ss, jumlah_barang, '|');
+        getline(ss, total_harga, '|');
+        getline(ss, metode, '|');
+        getline(ss, tanggal, '|');
 
-    while (getline(file, baris)) {
-        stringstream ss(baris);
-        string nama_barang, jumlah_barang, total_harga, metode, tanggal;
-        char pemisah;
+        auto trim = [](string &s) {
+            s.erase(0, s.find_first_not_of(" \t\n\r"));
+            s.erase(s.find_last_not_of(" \t\n\r") + 1);
+        };
 
-        ss >> pemisah;
-        ss >> nama_barang;
-        ss >> pemisah;
-        ss >> jumlah_barang;
-        ss >> pemisah;
-        ss >> total_harga;
-        ss >> pemisah;
-        ss >> metode;
-        ss >> pemisah;
-        ss >> tanggal;
+        trim(nama_barang);
+        trim(jumlah_barang);
+        trim(total_harga);
+        trim(metode);
+        trim(tanggal);
 
         int hari, bulan, tahun;
-        sscanf(tanggal.c_str(), "%d-%d-%d", &hari, &bulan, &tahun);
+        if (sscanf(tanggal.c_str(), "%d-%d-%d", &hari, &bulan, &tahun) != 3) {
+            continue;
+        }
 
         bool tampilkan_data = false;
         switch (pilihan) {
-            case 1:
-                if (hari == filter_hari && bulan == filter_bulan && tahun == filter_tahun) {
-                    tampilkan_data = true;
-                }
+            case 1 : tampilkan_data = (hari == filter_hari && bulan == filter_bulan && tahun == filter_tahun);
+                    break;
+            case 2 : tampilkan_data = (bulan == filter_bulan && tahun == filter_tahun);
                 break;
-            case 2:
-                if (bulan == filter_bulan && tahun == filter_tahun) {
-                    tampilkan_data = true;
-                }
+            case 3: tampilkan_data = (tahun == filter_tahun);
                 break;
-            case 3:
-                if (tahun == filter_tahun) {
-                    tampilkan_data = true;
-                }
-                break;
+            default:
+                tampilkan_data = true;
         }
 
         if (tampilkan_data) {
