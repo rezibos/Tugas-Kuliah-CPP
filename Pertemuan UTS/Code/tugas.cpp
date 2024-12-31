@@ -322,6 +322,69 @@ string dapatkanWaktuSekarang() {
     return string(buffer);
 }
 
+void BuatStrukPenjualan(const Transaksi& transaksi) {
+    system("cls");
+    ofstream struk("struk_penjualan.doc");
+    double total_barang;
+    int total_jumlah_barang = 0;
+
+    string header = R"(
+====================================================
+                SUKA MAJU BERSAMA
+    Jl. HangLengkir No. 19, Kota Tanjung Pinang
+              Telp: +6282130354176
+====================================================
+)";
+
+    cout << header;
+    struk << header;
+
+    string info = "Tanggal: " + transaksi.waktu + "\n"
+                "No. Transaksi: TRX" + to_string(jumlah_transaksi) + "\n"
+                "Metode Pembayaran: " + transaksi.metodePembayaran + "\n"
+                "====================================================\n";
+    
+    cout << info;
+    struk << info;
+
+    string tableHeader = 
+        "Nama Barang          Qty    Harga     Subtotal\n"
+        "====================================================\n";
+    
+    cout << tableHeader;
+    struk << tableHeader;
+
+    for (int i = 0; i < transaksi.jumlah_barang; i++) {
+        total_barang = transaksi.barang[i].harga_barang * transaksi.barang[i].stok_barang;
+        total_jumlah_barang += transaksi.barang[i].stok_barang;
+
+        stringstream ss;
+        ss << left << setw(20) << transaksi.barang[i].nama_barang.substr(0, 19)
+            << left << setw(7) << transaksi.barang[i].stok_barang
+            << right << setw(10) << fixed << setprecision(0) << transaksi.barang[i].harga_barang
+            << right << setw(12) << total_barang << "\n";
+
+        cout << ss.str();
+        struk << ss.str();
+    }
+
+    string footer = 
+        "====================================================\n"
+        "Total Item: " + to_string(transaksi.jumlah_barang) + "\n"
+        "Total Qty: " + to_string(total_jumlah_barang) + "\n"
+        "Total Pembayaran: Rp. " + to_string(static_cast<int>(transaksi.total)) + "\n"
+        "====================================================\n\n"
+        "            Terima Kasih Atas Kunjungan Anda         \n"
+        "              Selamat Datang Kembali :)              \n"
+        "====================================================\n";
+    
+    cout << footer;
+    struk << footer;
+
+    struk.close();
+    cout << "\nStruk telah disimpan dan dicetak!\n";
+}
+
 void ProsesTransaksi() {
     system("cls");
     bacaBarangDariFile();
@@ -466,6 +529,9 @@ void ProsesTransaksi() {
             cout << "Maaf, Jumlah Transaksi Telah Penuh \n";
         }
         simpanBarangKeFile();
+        cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
+        system("pause > null");
+        BuatStrukPenjualan(transaksi);
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
     }
