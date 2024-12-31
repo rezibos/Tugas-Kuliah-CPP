@@ -531,6 +531,7 @@ void ProsesTransaksi() {
         simpanBarangKeFile();
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
+        
         BuatStrukPenjualan(transaksi);
         cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
         system("pause > null");
