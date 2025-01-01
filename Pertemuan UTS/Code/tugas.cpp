@@ -329,12 +329,12 @@ void BuatStrukPenjualan(const Transaksi& transaksi) {
     int total_jumlah_barang = 0;
 
     string header = R"(
-====================================================
-                SUKA MAJU BERSAMA
-    Jl. HangLengkir No. 19, Kota Tanjung Pinang
-              Telp: +6282130354176
-====================================================
-)";
+    ====================================================
+                    SUKA MAJU BERSAMA
+        Jl. HangLengkir No. 19, Kota Tanjung Pinang
+                Telp: +6282130354176
+    ====================================================
+    )";
 
     cout << header;
     struk << header;
