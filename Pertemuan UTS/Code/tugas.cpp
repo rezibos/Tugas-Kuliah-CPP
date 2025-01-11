@@ -48,8 +48,9 @@ void simpanBarangKeFile() {
 
 void bacaBarangDariFile() {
     ifstream file("databarang.doc");
+
     if (!file) {
-        cout << "File data_barang.txt tidak ditemukan.\n";
+        cout << "File data_barang.doc tidak ditemukan.\n";
         return;
     }
 
@@ -174,16 +175,17 @@ void editBarang() {
         if (inventaris[i].id_barang == id_barang) {
             cout << "====================================\n";
             cout << "Barang ditemukan : \n";
+            cout << "ID Barang    : " << inventaris[i].id_barang << "\n";
             cout << "Nama Barang  : " << inventaris[i].nama_barang << "\n";
             cout << "Harga Barang : " << inventaris[i].harga_barang << "\n";
             cout << "Stok Barang  : " << inventaris[i].stok_barang << "\n";
             cout << "====================================\n";
 
             cout << "Masukkan Nama Barang Baru : ";
-            std::getline(cin, nama_baru);
+            getline(cin, nama_baru);
 
             for (int j = 0; j < jumlah_barang; j++) {
-                if (inventaris[j].nama_barang == nama_baru && inventaris[j].id_barang != id_barang) {
+                if (inventaris[j].nama_barang == nama_baru && j != i) {
                     cout << "Nama Barang Tersebut Sudah Ada!\n";
                     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
                     system("pause > null");
@@ -293,15 +295,37 @@ void tampilkanSemuaBarang(){
     }
 }
 
-void TampilkanMetodePembayaran(){
+void cariBarang() {
     system("cls");
+    string id_barang;
+
     cout << "====================================\n";
-    cout << "   Metode pembayaran yang tersedia  \n";
+    cout << "            Cari Barang             \n";
     cout << "====================================\n";
-    cout << "1. Tunai\n";
-    cout << "2. Debit\n";
-    cout << "3. QR\n";
-    cout << "====================================\n";
+
+    cout << "Masukkan ID Barang yang dicari: ";
+    cin >> id_barang;
+
+    bool ditemukan = false;
+    for (int i = 0; i < jumlah_barang; i++) {
+        if (inventaris[i].id_barang == id_barang) {
+            cout << "\nBarang Ditemukan!\n";
+            cout << "====================================\n";
+            cout << "ID Barang     : " << inventaris[i].id_barang << "\n";
+            cout << "Nama Barang   : " << inventaris[i].nama_barang << "\n";
+            cout << "Harga Barang  : Rp. " << inventaris[i].harga_barang << "\n";
+            cout << "Stok Barang   : " << inventaris[i].stok_barang << "\n";
+            cout << "====================================\n";
+            ditemukan = true;
+            break;
+        }
+    }
+
+    if (!ditemukan) {
+        cout << "\nBarang dengan ID " << id_barang << " tidak ditemukan.\n";
+        cout << "====================================\n";
+    }
+
     cout << "\nTekan Tombol Apapun Untuk Melanjutkan : ";
     system("pause > null");
 }
@@ -776,7 +800,7 @@ int main()
         cout << "2. Edit Barang \n";
         cout << "3. Hapus Barang \n";
         cout << "4. Tampilkan Semua Barang\n";
-        cout << "5. Tampilkan Metode Pembayaran\n";
+        cout << "5. Cari Barang\n";
         cout << "6. Proses Transaksi\n";
         cout << "7. Buat Laporan Penjualan\n";
         cout << "8. Simpan Transaksi ke File\n";
@@ -795,7 +819,7 @@ int main()
                     break;
             case '4': tampilkanSemuaBarang(); 
                     break;
-            case '5': TampilkanMetodePembayaran();
+            case '5': cariBarang();
                     break;
             case '6': ProsesTransaksi();
                     break;

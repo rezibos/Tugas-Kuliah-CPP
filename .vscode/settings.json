@@ -17,6 +17,7 @@
         "xutility": "cpp",
         "iosfwd": "cpp",
         "string": "cpp",
-        "istream": "cpp"
+        "istream": "cpp",
+        "stdexcept": "cpp"
     },
 }
